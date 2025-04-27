@@ -5,15 +5,17 @@ int main(void)
     Delivery *deliveries = NULL;
     Vehicle *vehicles = NULL;
 
-    int n_deliveries = load_delivery("deliveries.csv", &deliveries);
+    // Cargar entregas y vehículos desde los archivos CSV
+    int n_deliveries = load_delivery("db/deliveries.csv", &deliveries);
     error_load_delivery(n_deliveries);
 
-    int n_vehicles = load_vehicle("vehicles.csv", &vehicles);
+    int n_vehicles = load_vehicle("db/vehicles.csv", &vehicles);
     error_load_vehicle(n_vehicles, deliveries);
 
     fprintf(stderr, "Se han cargado %d entregas y %d vehículos.\n", n_deliveries, n_vehicles);
 
-    // Pruebas...
+    // Mostrar las entregas cargadas
+    printf("\n--- Entregas cargadas ---\n");
     for (int i = 0; i < n_deliveries; i++)
     {
         printf("Entrega %d: %s\n", i + 1, deliveries[i].id);
@@ -28,6 +30,8 @@ int main(void)
         printf("  Peso: %.2f\n", deliveries[i].weight);
     }
 
+    // Mostrar los vehículos cargados
+    printf("\n--- Vehículos cargados ---\n");
     for (int i = 0; i < n_vehicles; i++)
     {
         printf("Vehículo %d: %s\n", i + 1, vehicles[i].id);
@@ -40,6 +44,21 @@ int main(void)
         printf("  Especialidad: %d\n", vehicles[i].speciality);
     }
 
+    // Validar los datos de los vehículos
+    validate_vehicle_data(vehicles, n_vehicles);
+
+    // Asignar entregas a vehículos
+    assign_vehicles_to_deliveries(deliveries, n_deliveries, vehicles, n_vehicles);
+
+    // Calcular la distancia total recorrida por los vehículos
+    float total_distance = calculate_total_distance(vehicles, n_vehicles, deliveries, n_deliveries);
+    printf("\nDistancia total recorrida por los vehículos: %.2f km\n", total_distance);
+
+    // Calcular la utilización de los vehículos
+    printf("\n--- Utilización de los vehículos ---\n");
+    calculate_vehicle_utilization(vehicles, n_vehicles);
+
+    // Liberar memoria
     free(deliveries);
     free(vehicles);
 

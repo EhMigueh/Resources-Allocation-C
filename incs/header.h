@@ -1,9 +1,13 @@
+#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <float.h>
+#include <time.h>
 
 #define MAX_ID_LENGTH 10
 #define MAX_LINE_LENGTH 256
+#define FLEXIBILITY_MINUTES 60
 
 // Estructura que representa una entrega
 typedef struct
@@ -20,20 +24,23 @@ typedef struct
     int vehicle_type;       // Tipo de vehículo (1-3)
     float volume;           // Volumen de la entrega
     float weight;           // Peso de la entrega
+    
 } Delivery;
 
 // Estructura que representa un vehículo
-typedef struct
-{
-    char id[MAX_ID_LENGTH]; // ID del vehículo
-    int type;               // Tipo de vehículo (1-3)
-    float capacity_volume;  // Capacidad del vehículo en volumen
-    float capacity_weight;  // Capacidad del vehículo en peso
-    char start[6];          // Hora de inicio en formato HH:MM
-    char end[6];            // Hora de fin en formato HH:MM
-    float pos_x;            // Coordenadas de origen X
-    float pos_y;            // Coordenadas de origen Y
-    int speciality;         // Especialidad del vehículo (1-3)
+
+typedef struct {
+    char id[MAX_ID_LENGTH];
+    int type;
+    float capacity_volume;       // Capacidad actual de volumen
+    float capacity_weight;       // Capacidad actual de peso
+    float original_volume;       // Capacidad original de volumen
+    float original_weight;       // Capacidad original de peso
+    char start[6];
+    char end[6];
+    float pos_x;
+    float pos_y;
+    int speciality;
 } Vehicle;
 
 // Funciones de errores.
@@ -49,5 +56,13 @@ void delete_line_leap(char *);
 // Funciones de carga de datos.
 int load_delivery(const char *, Delivery **);
 int load_vehicle(const char *, Vehicle **);
+void export_assignments_to_csv(const char *filename, Delivery *deliveries, int n_deliveries, Vehicle *vehicles, int n_vehicles);
+void export_metrics_to_csv(const char *filename, int completed_deliveries, int total_deliveries,float total_distance, float total_wait_time, double execution_time);
 
-//
+// Funciones relacionadas con vehículos.
+void validate_vehicle_data(Vehicle *, int);
+void assign_vehicles_to_deliveries(Delivery *, int, Vehicle *, int);
+float calculate_total_distance(Vehicle *, int, Delivery *, int);
+float calculate_distance(float x1, float y1, float x2, float y2);
+void simulate_delays(Delivery *deliveries, int n_deliveries, int delay_minutes);
+void calculate_vehicle_utilization(Vehicle *vehicles, int n_vehicles);

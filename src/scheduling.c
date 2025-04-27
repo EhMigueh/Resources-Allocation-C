@@ -41,19 +41,35 @@ int load_delivery(const char *filename, Delivery **deliveries)
 
         delete_line_leap(line);
 
-        sscanf(line, "%[^,],%f,%f,%f,%f,%[^,],%[^,],%d,%d,%d,%f,%f",
-               temp_deliveries[count].id,
-               &temp_deliveries[count].origin_x,
-               &temp_deliveries[count].origin_y,
-               &temp_deliveries[count].destination_x,
-               &temp_deliveries[count].destination_y,
-               temp_deliveries[count].start,
-               temp_deliveries[count].end,
-               &temp_deliveries[count].duration,
-               &temp_deliveries[count].priority,
-               &temp_deliveries[count].vehicle_type,
-               &temp_deliveries[count].volume,
-               &temp_deliveries[count].weight);
+        // Validar que la línea tenga el formato correcto
+        if (strchr(line, ',') == NULL)
+        {
+            fprintf(stderr, "Línea mal formateada en deliveries.csv: %s\n", line);
+            continue; // Ignorar líneas mal formateadas
+        }
+
+        // Parsear los datos
+        int parsed = sscanf(line, "%[^,],%f,%f,%f,%f,%[^,],%[^,],%d,%d,%d,%f,%f",
+                            temp_deliveries[count].id,
+                            &temp_deliveries[count].origin_x,
+                            &temp_deliveries[count].origin_y,
+                            &temp_deliveries[count].destination_x,
+                            &temp_deliveries[count].destination_y,
+                            temp_deliveries[count].start,
+                            temp_deliveries[count].end,
+                            &temp_deliveries[count].duration,
+                            &temp_deliveries[count].priority,
+                            &temp_deliveries[count].vehicle_type,
+                            &temp_deliveries[count].volume,
+                            &temp_deliveries[count].weight);
+
+        // Validar que se hayan leído todos los campos
+        if (parsed != 12)
+        {
+            fprintf(stderr, "Error al parsear la línea en deliveries.csv: %s\n", line);
+            continue; // Ignorar líneas con datos incompletos
+        }
+
         count++;
     }
 
@@ -96,16 +112,28 @@ int load_vehicle(const char *filename, Vehicle **vehicles)
 
         delete_line_leap(line);
 
-        sscanf(line, "%[^,],%d,%f,%f,%[^,],%[^,],%f,%f,%d",
-               temp_vehicles[count].id,
-               &temp_vehicles[count].type,
-               &temp_vehicles[count].capacity_volume,
-               &temp_vehicles[count].capacity_weight,
-               temp_vehicles[count].start,
-               temp_vehicles[count].end,
-               &temp_vehicles[count].pos_x,
-               &temp_vehicles[count].pos_y,
-               &temp_vehicles[count].speciality);
+        // Parsear los datos
+        int parsed = sscanf(line, "%[^,],%d,%f,%f,%[^,],%[^,],%f,%f,%d",
+                            temp_vehicles[count].id,
+                            &temp_vehicles[count].type,
+                            &temp_vehicles[count].capacity_volume,
+                            &temp_vehicles[count].capacity_weight,
+                            temp_vehicles[count].start,
+                            temp_vehicles[count].end,
+                            &temp_vehicles[count].pos_x,
+                            &temp_vehicles[count].pos_y,
+                            &temp_vehicles[count].speciality);
+
+        if (parsed != 9)
+        {
+            fprintf(stderr, "Error al parsear la línea en vehicles.csv: %s\n", line);
+            continue;
+        }
+
+        // Inicializar las capacidades originales
+        temp_vehicles[count].original_volume = temp_vehicles[count].capacity_volume;
+        temp_vehicles[count].original_weight = temp_vehicles[count].capacity_weight;    
+
         count++;
     }
 
