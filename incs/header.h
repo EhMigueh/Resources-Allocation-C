@@ -24,18 +24,19 @@ typedef struct
     int vehicle_type;       // Tipo de vehículo (1-3)
     float volume;           // Volumen de la entrega
     float weight;           // Peso de la entrega
-    
+
 } Delivery;
 
 // Estructura que representa un vehículo
 
-typedef struct {
+typedef struct
+{
     char id[MAX_ID_LENGTH];
     int type;
-    float capacity_volume;       // Capacidad actual de volumen
-    float capacity_weight;       // Capacidad actual de peso
-    float original_volume;       // Capacidad original de volumen
-    float original_weight;       // Capacidad original de peso
+    float capacity_volume; // Capacidad actual de volumen
+    float capacity_weight; // Capacidad actual de peso
+    float original_volume; // Capacidad original de volumen
+    float original_weight; // Capacidad original de peso
     char start[6];
     char end[6];
     float pos_x;
@@ -57,7 +58,7 @@ void delete_line_leap(char *);
 int load_delivery(const char *, Delivery **);
 int load_vehicle(const char *, Vehicle **);
 void export_assignments_to_csv(const char *filename, Delivery *deliveries, int n_deliveries, Vehicle *vehicles, int n_vehicles);
-void export_metrics_to_csv(const char *filename, int completed_deliveries, int total_deliveries,float total_distance, float total_wait_time, double execution_time);
+void export_metrics_to_csv(const char *filename, int completed_deliveries, int total_deliveries, float total_distance, float total_wait_time, double execution_time);
 
 // Funciones relacionadas con vehículos.
 void validate_vehicle_data(Vehicle *, int);
