@@ -17,7 +17,8 @@ int time_to_minutes(const char *time_str)
 // Validar los datos de los vehículos
 void validate_vehicle_data(Vehicle *vehicles, int n_vehicles) 
 {
-    for (int i = 0; i < n_vehicles; i++) {
+    for (int i = 0; i < n_vehicles; i++) 
+    {
         if (vehicles[i].capacity_volume <= 0 || vehicles[i].capacity_weight <= 0) 
         {
             fprintf(stderr, "ERROR! El vehículo %s tiene capacidades inválidas.\n", vehicles[i].id);
@@ -40,25 +41,29 @@ void assign_vehicles_to_deliveries(Delivery *deliveries, int n_deliveries, Vehic
 
     clock_t start_time = clock(); // Inicia el temporizador
 
-    for (int i = 0; i < n_deliveries; i++) {
+    for (int i = 0; i < n_deliveries; i++) 
+    {
         int assigned = 0;
         int best_vehicle = -1;
         float min_distance = FLT_MAX;
 
-        for (int j = 0; j < n_vehicles; j++) {
+        for (int j = 0; j < n_vehicles; j++) 
+        {
             // Verificar restricciones con flexibilidad en tiempo
             if (vehicles[j].type >= deliveries[i].vehicle_type &&
                 vehicles[j].capacity_volume >= deliveries[i].volume &&
                 vehicles[j].capacity_weight >= deliveries[i].weight &&
                 time_to_minutes(vehicles[j].start) <= time_to_minutes(deliveries[i].start) + FLEXIBILITY_MINUTES &&
-                time_to_minutes(vehicles[j].end) >= time_to_minutes(deliveries[i].end)) {
+                time_to_minutes(vehicles[j].end) >= time_to_minutes(deliveries[i].end)) 
+                {
 
                 // Calcular la distancia entre el vehículo y el origen de la entrega
                 float distance = calculate_distance(vehicles[j].pos_x, vehicles[j].pos_y,
                                                     deliveries[i].origin_x, deliveries[i].origin_y);
 
                 // Seleccionar el vehículo con la menor distancia
-                if (distance < min_distance) {
+                if (distance < min_distance) 
+                {
                     min_distance = distance;
                     best_vehicle = j;
                 }
@@ -66,7 +71,8 @@ void assign_vehicles_to_deliveries(Delivery *deliveries, int n_deliveries, Vehic
         }
 
         // Asignar la entrega al mejor vehículo encontrado
-        if (best_vehicle != -1) {
+        if (best_vehicle != -1) 
+        {
             int j = best_vehicle;
 
             // Calcular el tiempo de espera
@@ -97,7 +103,8 @@ void assign_vehicles_to_deliveries(Delivery *deliveries, int n_deliveries, Vehic
         }
 
         // Manejar casos sin solución factible
-        if (!assigned) {
+        if (!assigned) 
+        {
             printf("No se pudo asignar un vehículo para la entrega %s\n", deliveries[i].id);
         }
     }
@@ -150,15 +157,19 @@ void calculate_vehicle_utilization(Vehicle *vehicles, int n_vehicles)
         printf("Vehículo %s: Peso original=%.2f, Peso usado=%.2f\n",
                vehicles[j].id, vehicles[j].original_weight, used_weight);
 
-        if (vehicles[j].original_volume > 0) {
+        if (vehicles[j].original_volume > 0) 
+        {
             printf("  Utilización de volumen: %.2f%%\n", (used_volume / vehicles[j].original_volume) * 100);
-        } else {
+        } else 
+        {
             printf("  Utilización de volumen: 0.00%%\n");
         }
 
-        if (vehicles[j].original_weight > 0) {
+        if (vehicles[j].original_weight > 0) 
+        {
             printf("  Utilización de peso: %.2f%%\n", (used_weight / vehicles[j].original_weight) * 100);
-        } else {
+        } else 
+        {
             printf("  Utilización de peso: 0.00%%\n");
         }
     }

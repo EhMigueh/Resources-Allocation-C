@@ -63,11 +63,10 @@ int load_delivery(const char *filename, Delivery **deliveries)
                             &temp_deliveries[count].volume,
                             &temp_deliveries[count].weight);
 
-        // Validar que se hayan leído todos los campos
         if (parsed != 12)
         {
             fprintf(stderr, "Error al parsear la línea en deliveries.csv: %s\n", line);
-            continue; // Ignorar líneas con datos incompletos
+            continue; 
         }
 
         count++;
@@ -76,7 +75,7 @@ int load_delivery(const char *filename, Delivery **deliveries)
     fclose(file);
     *deliveries = temp_deliveries;
 
-    return count; // Devuelve el número de entregas cargadas
+    return count; 
 }
 
 // Función para cargar los vehículos desde el CSV.

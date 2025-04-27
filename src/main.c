@@ -47,8 +47,31 @@ int main(void)
     // Validar los datos de los vehículos
     validate_vehicle_data(vehicles, n_vehicles);
 
-    // Asignar entregas a vehículos
-    assign_vehicles_to_deliveries(deliveries, n_deliveries, vehicles, n_vehicles);
+    // Menú para seleccionar la estrategia de scheduling
+    int choice;
+    printf("\nSeleccione la estrategia de scheduling:\n");
+    printf("1. Earliest Deadline First (EDF)\n");
+    printf("2. Shortest Processing Time (SPT)\n");
+    printf("3. Priority-Based Scheduling\n");
+    printf("Ingrese su elección: ");
+    scanf("%d", &choice);
+
+    // Ejecutar la estrategia seleccionada
+    switch (choice)
+    {
+        case 1:
+            schedule_edf(deliveries, n_deliveries, vehicles, n_vehicles);
+            break;
+        case 2:
+            schedule_spt(deliveries, n_deliveries, vehicles, n_vehicles);
+            break;
+        case 3:
+            schedule_priority(deliveries, n_deliveries, vehicles, n_vehicles);
+            break;
+        default:
+            printf("Opción no válida.\n");
+            break;
+    }
 
     // Calcular la distancia total recorrida por los vehículos
     float total_distance = calculate_total_distance(vehicles, n_vehicles, deliveries, n_deliveries);

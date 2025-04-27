@@ -66,3 +66,12 @@ float calculate_total_distance(Vehicle *, int, Delivery *, int);
 float calculate_distance(float x1, float y1, float x2, float y2);
 void simulate_delays(Delivery *deliveries, int n_deliveries, int delay_minutes);
 void calculate_vehicle_utilization(Vehicle *vehicles, int n_vehicles);
+
+// Funciones nuevas.
+void schedule_edf(Delivery *deliveries, int n_deliveries, Vehicle *vehicles, int n_vehicles);
+void schedule_spt(Delivery *deliveries, int n_deliveries, Vehicle *vehicles, int n_vehicles);
+void schedule_priority(Delivery *deliveries, int n_deliveries, Vehicle *vehicles, int n_vehicles);
+
+int compare_by_end(const void *a, const void *b);
+int compare_by_duration(const void *a, const void *b);
+int compare_by_priority(const void *a, const void *b);
