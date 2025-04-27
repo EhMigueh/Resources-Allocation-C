@@ -66,7 +66,7 @@ int load_delivery(const char *filename, Delivery **deliveries)
         if (parsed != 12)
         {
             fprintf(stderr, "Error al parsear la línea en deliveries.csv: %s\n", line);
-            continue; 
+            continue;
         }
 
         count++;
@@ -75,7 +75,7 @@ int load_delivery(const char *filename, Delivery **deliveries)
     fclose(file);
     *deliveries = temp_deliveries;
 
-    return count; 
+    return count;
 }
 
 // Función para cargar los vehículos desde el CSV.
@@ -131,7 +131,7 @@ int load_vehicle(const char *filename, Vehicle **vehicles)
 
         // Inicializar las capacidades originales
         temp_vehicles[count].original_volume = temp_vehicles[count].capacity_volume;
-        temp_vehicles[count].original_weight = temp_vehicles[count].capacity_weight;    
+        temp_vehicles[count].original_weight = temp_vehicles[count].capacity_weight;
 
         count++;
     }

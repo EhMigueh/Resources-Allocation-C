@@ -53,24 +53,28 @@ int main(void)
     printf("1. Earliest Deadline First (EDF)\n");
     printf("2. Shortest Processing Time (SPT)\n");
     printf("3. Priority-Based Scheduling\n");
+    printf("4. Nearest Neighbor\n");
     printf("Ingrese su elección: ");
     scanf("%d", &choice);
 
     // Ejecutar la estrategia seleccionada
     switch (choice)
     {
-        case 1:
-            schedule_edf(deliveries, n_deliveries, vehicles, n_vehicles);
-            break;
-        case 2:
-            schedule_spt(deliveries, n_deliveries, vehicles, n_vehicles);
-            break;
-        case 3:
-            schedule_priority(deliveries, n_deliveries, vehicles, n_vehicles);
-            break;
-        default:
-            printf("Opción no válida.\n");
-            break;
+    case 1:
+        schedule_edf(deliveries, n_deliveries, vehicles, n_vehicles);
+        break;
+    case 2:
+        schedule_spt(deliveries, n_deliveries, vehicles, n_vehicles);
+        break;
+    case 3:
+        schedule_priority(deliveries, n_deliveries, vehicles, n_vehicles);
+        break;
+    case 4:
+        schedule_nearest_neighbor(deliveries, n_deliveries, vehicles, n_vehicles);
+        break;
+    default:
+        printf("Opción no válida.\n");
+        break;
     }
 
     // Calcular la distancia total recorrida por los vehículos

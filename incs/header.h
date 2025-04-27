@@ -72,6 +72,7 @@ void calculate_vehicle_utilization(Vehicle *vehicles, int n_vehicles);
 void schedule_edf(Delivery *deliveries, int n_deliveries, Vehicle *vehicles, int n_vehicles);
 void schedule_spt(Delivery *deliveries, int n_deliveries, Vehicle *vehicles, int n_vehicles);
 void schedule_priority(Delivery *deliveries, int n_deliveries, Vehicle *vehicles, int n_vehicles);
+void schedule_nearest_neighbor(Delivery *deliveries, int n_deliveries, Vehicle *vehicles, int n_vehicles);
 
 int compare_by_end(const void *a, const void *b);
 int compare_by_duration(const void *a, const void *b);
