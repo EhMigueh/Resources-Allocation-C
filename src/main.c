@@ -49,13 +49,10 @@ int main(void)
 
     // Menú para seleccionar la estrategia de scheduling
     int choice;
-    printf("\nSeleccione la estrategia de scheduling:\n");
-    printf("1. Earliest Deadline First (EDF)\n");
-    printf("2. Shortest Processing Time (SPT)\n");
-    printf("3. Priority-Based Scheduling\n");
-    printf("4. Nearest Neighbor\n");
-    printf("Ingrese su elección: ");
-    scanf("%d", &choice);
+    menu_scheduling();
+
+    if (scanf("%d", &choice) != 1)
+        error_selection_choice(deliveries, vehicles);
 
     // Ejecutar la estrategia seleccionada
     switch (choice)

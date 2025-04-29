@@ -59,11 +59,13 @@ void error_load_vehicle(int, Delivery *);
 void error_open_file(FILE *, const char *);
 void error_malloc_delivery(Delivery *, FILE *);
 void error_malloc_vehicle(Vehicle *, FILE *);
+void error_selection_choice(Delivery *, Vehicle *);
 
 // Funciones auxiliares.
-void delete_line_leap(char *);
+void menu_scheduling(void);
 
 // Funciones de carga de datos.
+void delete_line_leap(char *);
 int load_delivery(const char *, Delivery **);
 int load_vehicle(const char *, Vehicle **);
 void export_assignments_to_csv(const char *filename, Delivery *deliveries, int n_deliveries, Vehicle *vehicles, int n_vehicles);

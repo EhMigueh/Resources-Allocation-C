@@ -49,3 +49,11 @@ void error_malloc_vehicle(Vehicle *temp, FILE *file)
         exit(EXIT_FAILURE);
     }
 }
+
+void error_selection_choice(Delivery *deliveries, Vehicle *vehicles)
+{
+    fprintf(stderr, "ERROR! Opción inválida. Por favor, ingrese un número válido.\n");
+    free(deliveries);
+    free(vehicles);
+    exit(EXIT_FAILURE);
+}
