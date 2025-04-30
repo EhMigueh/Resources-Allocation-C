@@ -23,11 +23,7 @@ int load_delivery(const char *filename, Delivery **deliveries)
 
     // Lee los encabezados y los descarta
     if (fgets(line, MAX_LINE_LENGTH, file) == NULL)
-    {
-        fclose(file);
-        free(temp_deliveries);
-        return 0; // No se pudieron leer las entregas
-    }
+        error_read_top_delivery(file, temp_deliveries);
 
     // Lee cada línea del archivo
     while (fgets(line, MAX_LINE_LENGTH, file))
@@ -43,10 +39,7 @@ int load_delivery(const char *filename, Delivery **deliveries)
 
         // Validar que la línea tenga el formato correcto
         if (strchr(line, ',') == NULL)
-        {
-            fprintf(stderr, "Línea mal formateada en deliveries.csv: %s\n", line);
-            continue; // Ignorar líneas mal formateadas
-        }
+            error_format_delivery(line);
 
         // Parsear los datos
         int parsed = sscanf(line, "%[^,],%f,%f,%f,%f,%[^,],%[^,],%d,%d,%d,%f,%f",
@@ -63,11 +56,7 @@ int load_delivery(const char *filename, Delivery **deliveries)
                             &temp_deliveries[count].volume,
                             &temp_deliveries[count].weight);
 
-        if (parsed != 12)
-        {
-            fprintf(stderr, "Error al parsear la línea en deliveries.csv: %s\n", line);
-            continue;
-        }
+        error_parse_delivery(parsed, line);
 
         count++;
     }
@@ -93,11 +82,7 @@ int load_vehicle(const char *filename, Vehicle **vehicles)
 
     // Lee los encabezados y los descarta
     if (fgets(line, MAX_LINE_LENGTH, file) == NULL)
-    {
-        fclose(file);
-        free(temp_vehicles);
-        return 0; // No se pudieron leer los vehículos
-    }
+        error_read_top_vehicle(file, temp_vehicles);
 
     // Lee cada línea del archivo
     while (fgets(line, MAX_LINE_LENGTH, file))
@@ -123,11 +108,7 @@ int load_vehicle(const char *filename, Vehicle **vehicles)
                             &temp_vehicles[count].pos_y,
                             &temp_vehicles[count].speciality);
 
-        if (parsed != 9)
-        {
-            fprintf(stderr, "Error al parsear la línea en vehicles.csv: %s\n", line);
-            continue;
-        }
+        error_parse_vehicle(parsed, line);
 
         // Inicializar las capacidades originales
         temp_vehicles[count].original_volume = temp_vehicles[count].capacity_volume;

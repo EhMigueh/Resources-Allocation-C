@@ -9,6 +9,9 @@
 #define MAX_LINE_LENGTH 256
 #define FLEXIBILITY_MINUTES 60
 
+#define RESET_COLOR "\x1b[0m"
+#define RED_COLOR "\x1b[31m"
+
 // Estructura que representa una entrega
 typedef struct
 {
@@ -58,10 +61,18 @@ void error_load_vehicle(int, Delivery *);
 void error_open_file(FILE *, const char *);
 void error_malloc_delivery(Delivery *, FILE *);
 void error_malloc_vehicle(Vehicle *, FILE *);
+void error_read_top_delivery(FILE *, Delivery *);
+void error_read_top_vehicle(FILE *, Vehicle *);
 void error_selection_choice(Delivery *, Vehicle *);
+void error_format_delivery(const char *);
+void error_parse_delivery(int, const char *);
+void error_parse_vehicle(int, const char *);
+void error_vehicle_capacity(void);
+void error_vehicle_type(void);
 
 // Funciones auxiliares.
 void menu_scheduling(void);
+void print_deliveries_and_vehicles(Delivery *, Vehicle *, int, int);
 
 // Funciones de carga de datos.
 void delete_line_leap(char *);

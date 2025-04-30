@@ -20,15 +20,9 @@ void validate_vehicle_data(Vehicle *vehicles, int n_vehicles)
     for (int i = 0; i < n_vehicles; i++)
     {
         if (vehicles[i].capacity_volume <= 0 || vehicles[i].capacity_weight <= 0)
-        {
-            fprintf(stderr, "ERROR! El vehículo %s tiene capacidades inválidas.\n", vehicles[i].id);
-            exit(EXIT_FAILURE);
-        }
+            error_vehicle_capacity();
         if (vehicles[i].type < 1 || vehicles[i].type > 3)
-        {
-            fprintf(stderr, "ERROR! El vehículo %s tiene un tipo inválido.\n", vehicles[i].id);
-            exit(EXIT_FAILURE);
-        }
+            error_vehicle_type();
     }
 }
 
@@ -47,7 +41,6 @@ void assign_vehicles_to_deliveries(Delivery *deliveries, int n_deliveries, Vehic
         float min_distance = FLT_MAX;
 
         for (int j = 0; j < n_vehicles; j++)
-        {
             if (vehicles[j].type >= deliveries[i].vehicle_type &&
                 vehicles[j].capacity_volume >= deliveries[i].volume &&
                 vehicles[j].capacity_weight >= deliveries[i].weight &&
@@ -76,7 +69,7 @@ void assign_vehicles_to_deliveries(Delivery *deliveries, int n_deliveries, Vehic
 
                 else
                 {
-                    // aca hay que implementar los otros modos de asignacion, pero ppr miestyras dejare esto kbros :P xd?
+                    // aca hay que implementar los otros modos de asignacion, pero ppr miestyras dejare esto kbros :P xd
                     float distance = calculate_distance(vehicles[j].pos_x, vehicles[j].pos_y, deliveries[i].origin_x, deliveries[i].origin_y);
 
                     if (distance < min_distance)
@@ -86,7 +79,6 @@ void assign_vehicles_to_deliveries(Delivery *deliveries, int n_deliveries, Vehic
                     }
                 }
             }
-        }
 
         // asignar la entrega al mejor vehiulo
         if (best_vehicle != -1)
@@ -111,24 +103,24 @@ void assign_vehicles_to_deliveries(Delivery *deliveries, int n_deliveries, Vehic
             vehicles[j].pos_x = deliveries[i].destination_x;
             vehicles[j].pos_y = deliveries[i].destination_y;
 
-            printf("Asignando entrega %s al vehículo %s\n", deliveries[i].id, vehicles[j].id);
-            printf("Capacidad restante del vehículo %s: Volumen=%.2f, Peso=%.2f\n", vehicles[j].id, vehicles[j].capacity_volume, vehicles[j].capacity_weight);
+            fprintf(stdout, "Asignando entrega %s al vehículo %s\n", deliveries[i].id, vehicles[j].id);
+            fprintf(stdout, "Capacidad restante del vehículo %s: Volumen=%.2f, Peso=%.2f\n\n", vehicles[j].id, vehicles[j].capacity_volume, vehicles[j].capacity_weight);
 
             assigned = 1;
         }
 
         if (!assigned)
-            printf("No se pudo asignar un vehículo para la entrega %s\n", deliveries[i].id);
+            fprintf(stdout, "No se pudo asignar un vehículo para la entrega %s\n\n", deliveries[i].id);
     }
 
     clock_t end_time = clock();
     double execution_time = (double)(end_time - start_time) / CLOCKS_PER_SEC;
 
-    printf("\n--- Métricas ---\n");
-    printf("Número de entregas completadas: %d/%d\n", completed_deliveries, n_deliveries);
-    printf("Distancia total recorrida: %.2f km\n", total_distance);
-    printf("Tiempo total de espera: %.2f minutos\n", total_wait_time);
-    printf("Tiempo de ejecución del algoritmo: %.6f segundos\n", execution_time);
+    fprintf(stdout, "\n--- Métricas ---\n\n");
+    fprintf(stdout, "Número de entregas completadas: %d/%d\n", completed_deliveries, n_deliveries);
+    fprintf(stdout, "Distancia total recorrida: %.2f km\n", total_distance);
+    fprintf(stdout, "Tiempo total de espera: %.2f minutos\n", total_wait_time);
+    fprintf(stdout, "Tiempo de ejecución del algoritmo: %.6f segundos\n", execution_time);
 }
 
 // Calcular la distancia total recorrida por los vehículos
@@ -137,19 +129,13 @@ float calculate_total_distance(Vehicle *vehicles, int n_vehicles, Delivery *deli
     float total_distance = 0.0;
 
     for (int i = 0; i < n_deliveries; i++)
-    {
         for (int j = 0; j < n_vehicles; j++)
-        {
-            if (vehicles[j].type >= deliveries[i].vehicle_type &&
-                vehicles[j].capacity_volume >= deliveries[i].volume &&
-                vehicles[j].capacity_weight >= deliveries[i].weight)
+            if (vehicles[j].type >= deliveries[i].vehicle_type && vehicles[j].capacity_volume >= deliveries[i].volume && vehicles[j].capacity_weight >= deliveries[i].weight)
             {
                 float distance = sqrt(pow(deliveries[i].origin_x - vehicles[j].pos_x, 2) + pow(deliveries[i].origin_y - vehicles[j].pos_y, 2));
                 total_distance += distance;
                 break;
             }
-        }
-    }
 
     return total_distance;
 }
@@ -157,23 +143,25 @@ float calculate_total_distance(Vehicle *vehicles, int n_vehicles, Delivery *deli
 // Calcular la utilización de los vehículos
 void calculate_vehicle_utilization(Vehicle *vehicles, int n_vehicles)
 {
+    fprintf(stdout, "\n\n--- Utilización de los vehículos ---\n\n");
+
     for (int j = 0; j < n_vehicles; j++)
     {
         float used_volume = vehicles[j].original_volume - vehicles[j].capacity_volume;
         float used_weight = vehicles[j].original_weight - vehicles[j].capacity_weight;
 
         // Mensajes de depuración
-        printf("Vehículo %s: Volumen original=%.2f, Volumen usado=%.2f\n", vehicles[j].id, vehicles[j].original_volume, used_volume);
-        printf("Vehículo %s: Peso original=%.2f, Peso usado=%.2f\n", vehicles[j].id, vehicles[j].original_weight, used_weight);
+        fprintf(stdout, "Vehículo %s: Volumen original=%.2f, Volumen usado=%.2f\n", vehicles[j].id, vehicles[j].original_volume, used_volume);
+        fprintf(stdout, "Vehículo %s: Peso original=%.2f, Peso usado=%.2f\n", vehicles[j].id, vehicles[j].original_weight, used_weight);
 
         if (vehicles[j].original_volume > 0)
-            printf("  Utilización de volumen: %.2f%%\n", (used_volume / vehicles[j].original_volume) * 100);
+            fprintf(stdout, "  Utilización de volumen: %.2f%%\n", (used_volume / vehicles[j].original_volume) * 100);
         else
-            printf("  Utilización de volumen: 0.00%%\n");
+            fprintf(stdout, "  Utilización de volumen: 0.00%%\n");
 
         if (vehicles[j].original_weight > 0)
-            printf("  Utilización de peso: %.2f%%\n", (used_weight / vehicles[j].original_weight) * 100);
+            fprintf(stdout, "  Utilización de peso: %.2f%%\n\n", (used_weight / vehicles[j].original_weight) * 100);
         else
-            printf("  Utilización de peso: 0.00%%\n");
+            fprintf(stdout, "  Utilización de peso: 0.00%%\n\n");
     }
 }
