@@ -28,7 +28,6 @@ typedef struct
 } Delivery;
 
 // Estructura que representa un vehículo
-
 typedef struct
 {
     char id[MAX_ID_LENGTH];

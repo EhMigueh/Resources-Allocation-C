@@ -5,7 +5,7 @@ void schedule_edf(Delivery *deliveries, int n_deliveries, Vehicle *vehicles, int
 {
     qsort(deliveries, n_deliveries, sizeof(Delivery), compare_by_end);
     printf("\n--- Estrategia: Earliest Deadline First (EDF) ---\n");
-    assign_vehicles_to_deliveries(deliveries, n_deliveries, vehicles, n_vehicles, "EARLIEST_DEADLINE_FIRST");
+    assign_vehicles_to_deliveries(deliveries, n_deliveries, vehicles, n_vehicles, EARLIEST_DEADLINE_FIRST);
 }
 
 int compare_by_end(const void *a, const void *b)
@@ -20,7 +20,7 @@ void schedule_spt(Delivery *deliveries, int n_deliveries, Vehicle *vehicles, int
 {
     qsort(deliveries, n_deliveries, sizeof(Delivery), compare_by_duration);
     printf("\n--- Estrategia: Shortest Processing Time (SPT) ---\n");
-    assign_vehicles_to_deliveries(deliveries, n_deliveries, vehicles, n_vehicles, "SHORTEST_PROCESSING_TIME");
+    assign_vehicles_to_deliveries(deliveries, n_deliveries, vehicles, n_vehicles, SHORTEST_PROCESSING_TIME);
 }
 
 int compare_by_duration(const void *a, const void *b)
@@ -35,7 +35,7 @@ void schedule_priority(Delivery *deliveries, int n_deliveries, Vehicle *vehicles
 {
     qsort(deliveries, n_deliveries, sizeof(Delivery), compare_by_priority);
     printf("\n--- Estrategia: Priority-Based Scheduling ---\n");
-    assign_vehicles_to_deliveries(deliveries, n_deliveries, vehicles, n_vehicles, "PRIORITY_BASED");
+    assign_vehicles_to_deliveries(deliveries, n_deliveries, vehicles, n_vehicles, PRIORITY_BASED);
 }
 
 int compare_by_priority(const void *a, const void *b)
@@ -48,5 +48,5 @@ int compare_by_priority(const void *a, const void *b)
 void schedule_nearest_neighbor(Delivery *deliveries, int n_deliveries, Vehicle *vehicles, int n_vehicles)
 {
     printf("\n--- Estrategia: Nearest-Neighbor Scheduling ---\n");
-    assign_vehicles_to_deliveries(deliveries, n_deliveries, vehicles, n_vehicles, "NEAREST_NEIGHBOR");
+    assign_vehicles_to_deliveries(deliveries, n_deliveries, vehicles, n_vehicles, NEAREST_NEIGHBOR);
 }

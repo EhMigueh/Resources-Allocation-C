@@ -76,7 +76,7 @@ void assign_vehicles_to_deliveries(Delivery *deliveries, int n_deliveries, Vehic
 
                 else
                 {
-                    // aca hay que implementar los otros modos de asignacion, pero ppr miestyras dejare esto kbros :P
+                    // aca hay que implementar los otros modos de asignacion, pero ppr miestyras dejare esto kbros :P xd?
                     float distance = calculate_distance(vehicles[j].pos_x, vehicles[j].pos_y, deliveries[i].origin_x, deliveries[i].origin_y);
 
                     if (distance < min_distance)
