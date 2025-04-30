@@ -45,8 +45,7 @@ int main(void)
     }
 
     // Calcular la distancia total recorrida por los vehículos
-    float total_distance = calculate_total_distance(vehicles, n_vehicles, deliveries, n_deliveries);
-    fprintf(stdout, "Distancia total recorrida por los vehículos: %.2f km\n", total_distance);
+    calculate_total_distance(vehicles, n_vehicles, deliveries, n_deliveries);
 
     // Calcular la utilización de los vehículos
     calculate_vehicle_utilization(vehicles, n_vehicles);

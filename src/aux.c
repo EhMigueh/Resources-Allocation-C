@@ -11,10 +11,9 @@ void menu_scheduling()
     fprintf(stdout, "\nIngrese su elección: ");
 }
 
-// Print para probar si se cargaron las entregas y vehículos correctamente
+// Print para probar si se cargaron las entregas y vehículos correctamente (TEMPORAL)
 void print_deliveries_and_vehicles(Delivery *deliveries, Vehicle *vehicles, int n_deliveries, int n_vehicles)
 {
-    // Mostrar las entregas cargadas
     fprintf(stdout, "\n--- Entregas cargadas ---\n");
     for (int i = 0; i < n_deliveries; i++)
     {
@@ -30,7 +29,6 @@ void print_deliveries_and_vehicles(Delivery *deliveries, Vehicle *vehicles, int 
         fprintf(stdout, "  Peso: %.2f\n", deliveries[i].weight);
     }
 
-    // Mostrar los vehículos cargados
     fprintf(stdout, "\n--- Vehículos cargados ---\n");
     for (int i = 0; i < n_vehicles; i++)
     {

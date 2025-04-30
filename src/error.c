@@ -82,6 +82,12 @@ void error_format_delivery(const char *line)
     exit(EXIT_FAILURE);
 }
 
+void error_format_vehicle(const char *line)
+{
+    fprintf(stderr, RED_COLOR "\nERROR! Línea mal formateada en vehicles.csv: %s\n\n" RESET_COLOR, line);
+    exit(EXIT_FAILURE);
+}
+
 void error_parse_delivery(int parsed, const char *line)
 {
     if (parsed != 12)

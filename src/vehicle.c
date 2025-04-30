@@ -124,7 +124,7 @@ void assign_vehicles_to_deliveries(Delivery *deliveries, int n_deliveries, Vehic
 }
 
 // Calcular la distancia total recorrida por los vehículos
-float calculate_total_distance(Vehicle *vehicles, int n_vehicles, Delivery *deliveries, int n_deliveries)
+void calculate_total_distance(Vehicle *vehicles, int n_vehicles, Delivery *deliveries, int n_deliveries)
 {
     float total_distance = 0.0;
 
@@ -137,7 +137,7 @@ float calculate_total_distance(Vehicle *vehicles, int n_vehicles, Delivery *deli
                 break;
             }
 
-    return total_distance;
+    fprintf(stdout, "Distancia total recorrida por los vehículos: %.2f km\n", total_distance);
 }
 
 // Calcular la utilización de los vehículos

@@ -65,6 +65,7 @@ void error_read_top_delivery(FILE *, Delivery *);
 void error_read_top_vehicle(FILE *, Vehicle *);
 void error_selection_choice(Delivery *, Vehicle *);
 void error_format_delivery(const char *);
+void error_format_vehicle(const char *);
 void error_parse_delivery(int, const char *);
 void error_parse_vehicle(int, const char *);
 void error_vehicle_capacity(void);
@@ -84,7 +85,7 @@ void export_metrics_to_csv(const char *filename, int completed_deliveries, int t
 // Funciones relacionadas con vehículos.
 void validate_vehicle_data(Vehicle *, int);
 void assign_vehicles_to_deliveries(Delivery *deliveries, int n_deliveries, Vehicle *vehicles, int n_vehicles, SchedulingMode mode);
-float calculate_total_distance(Vehicle *, int, Delivery *, int);
+void calculate_total_distance(Vehicle *, int, Delivery *, int);
 float calculate_distance(float x1, float y1, float x2, float y2);
 void simulate_delays(Delivery *deliveries, int n_deliveries, int delay_minutes);
 void calculate_vehicle_utilization(Vehicle *vehicles, int n_vehicles);
