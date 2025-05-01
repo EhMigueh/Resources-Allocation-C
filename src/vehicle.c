@@ -34,6 +34,12 @@ void assign_vehicles_to_deliveries(Delivery *deliveries, int n_deliveries, Vehic
 
     clock_t start_time = clock();
 
+    // si el modo es EARLIEST_DEADLINE_FIRST se debe ordenar para que las fechas limite mas cercana queden primero
+    if (mode == EARLIEST_DEADLINE_FIRST)
+    {
+        qsort(deliveries, n_deliveries, sizeof(Delivery), compare_deadlines);
+    }
+
     for (int i = 0; i < n_deliveries; i++)
     {
         int assigned = 0;
@@ -41,15 +47,19 @@ void assign_vehicles_to_deliveries(Delivery *deliveries, int n_deliveries, Vehic
         float min_distance = FLT_MAX;
 
         for (int j = 0; j < n_vehicles; j++)
+        {
             if (vehicles[j].type >= deliveries[i].vehicle_type &&
                 vehicles[j].capacity_volume >= deliveries[i].volume &&
                 vehicles[j].capacity_weight >= deliveries[i].weight &&
                 time_to_minutes(vehicles[j].start) <= time_to_minutes(deliveries[i].start) + FLEXIBILITY_MINUTES &&
                 time_to_minutes(vehicles[j].end) >= time_to_minutes(deliveries[i].end))
             {
-                if (mode == NEAREST_NEIGHBOR)
+                switch (mode)
                 {
-                    float distance_to_origin = calculate_distance(vehicles[j].pos_x, vehicles[j].pos_y, deliveries[i].origin_x, deliveries[i].origin_y);
+                case NEAREST_NEIGHBOR:
+                {
+                    float distance_to_origin = calculate_distance(vehicles[j].pos_x, vehicles[j].pos_y,
+                                                                  deliveries[i].origin_x, deliveries[i].origin_y);
                     int vehicle_available_time = time_to_minutes(vehicles[j].start);
                     int delivery_start_time = time_to_minutes(deliveries[i].start);
                     float time_difference = delivery_start_time - vehicle_available_time;
@@ -57,7 +67,6 @@ void assign_vehicles_to_deliveries(Delivery *deliveries, int n_deliveries, Vehic
                     if (time_difference < 0)
                         time_difference = 0;
 
-                    // distancia + (penalización por tiempo de espera)
                     float score = distance_to_origin + (0.5f * time_difference);
 
                     if (score < min_distance)
@@ -65,52 +74,72 @@ void assign_vehicles_to_deliveries(Delivery *deliveries, int n_deliveries, Vehic
                         min_distance = score;
                         best_vehicle = j;
                     }
+                    break;
                 }
 
-                else
+                case EARLIEST_DEADLINE_FIRST:
                 {
-                    // aca hay que implementar los otros modos de asignacion, pero ppr miestyras dejare esto kbros :P xd
-                    float distance = calculate_distance(vehicles[j].pos_x, vehicles[j].pos_y, deliveries[i].origin_x, deliveries[i].origin_y);
+                    int delivery_deadline = time_to_minutes(deliveries[i].end);
+                    int vehicle_available_time = time_to_minutes(vehicles[j].start);
+                    float distance_to_origin = calculate_distance(vehicles[j].pos_x, vehicles[j].pos_y,
+                                                                  deliveries[i].origin_x, deliveries[i].origin_y);
+
+                    float urgency_score = delivery_deadline + distance_to_origin;
+
+                    if (urgency_score < min_distance)
+                    {
+                        min_distance = urgency_score;
+                        best_vehicle = j;
+                    }
+                    break;
+                }
+
+                default:
+                {
+                    float distance = calculate_distance(vehicles[j].pos_x, vehicles[j].pos_y,
+                                                        deliveries[i].origin_x, deliveries[i].origin_y);
 
                     if (distance < min_distance)
                     {
                         min_distance = distance;
                         best_vehicle = j;
                     }
+                    break;
+                }
                 }
             }
+        }
 
-        // asignar la entrega al mejor vehiulo
+        // asignar la entrega al mejor vehículo
         if (best_vehicle != -1)
         {
             int j = best_vehicle;
 
-            // tiempo de espera
             int vehicle_arrival_time = time_to_minutes(vehicles[j].start);
             int delivery_start_time = time_to_minutes(deliveries[i].start);
             float wait_time = (delivery_start_time > vehicle_arrival_time) ? (delivery_start_time - vehicle_arrival_time) : 0;
 
-            // metricas
             completed_deliveries++;
             total_wait_time += wait_time;
             total_distance += min_distance;
 
-            // restas
             vehicles[j].capacity_volume -= deliveries[i].volume;
             vehicles[j].capacity_weight -= deliveries[i].weight;
 
-            // actualizacion la posicion del vehicilo al destino de la entrega
             vehicles[j].pos_x = deliveries[i].destination_x;
             vehicles[j].pos_y = deliveries[i].destination_y;
 
             fprintf(stdout, "Asignando entrega %s al vehículo %s\n", deliveries[i].id, vehicles[j].id);
-            fprintf(stdout, "Capacidad restante del vehículo %s: Volumen=%.2f, Peso=%.2f\n\n", vehicles[j].id, vehicles[j].capacity_volume, vehicles[j].capacity_weight);
+            fprintf(stdout, "Capacidad restante del vehículo %s: Volumen=%.2f, Peso=%.2f\n\n",
+                    vehicles[j].id, vehicles[j].capacity_volume, vehicles[j].capacity_weight);
 
             assigned = 1;
         }
 
         if (!assigned)
+        {
             fprintf(stdout, "No se pudo asignar un vehículo para la entrega %s\n\n", deliveries[i].id);
+        }
     }
 
     clock_t end_time = clock();
@@ -164,4 +193,15 @@ void calculate_vehicle_utilization(Vehicle *vehicles, int n_vehicles)
         else
             fprintf(stdout, "  Utilización de peso: 0.00%%\n\n");
     }
+}
+
+int compare_deadlines(const void *a, const void *b)
+{
+    Delivery *d1 = (Delivery *)a;
+    Delivery *d2 = (Delivery *)b;
+
+    int t1 = time_to_minutes(d1->end);
+    int t2 = time_to_minutes(d2->end);
+
+    return t1 - t2; // orden ascendente
 }

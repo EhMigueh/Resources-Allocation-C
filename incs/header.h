@@ -99,3 +99,4 @@ void schedule_nearest_neighbor(Delivery *deliveries, int n_deliveries, Vehicle *
 int compare_by_end(const void *a, const void *b);
 int compare_by_duration(const void *a, const void *b);
 int compare_by_priority(const void *a, const void *b);
+int compare_deadlines(const void *a, const void *b);
