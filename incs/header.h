@@ -100,3 +100,9 @@ int compare_by_end(const void *a, const void *b);
 int compare_by_duration(const void *a, const void *b);
 int compare_by_priority(const void *a, const void *b);
 int compare_deadlines(const void *a, const void *b);
+
+void sort_by_end(Delivery *deliveries, int n_deliveries);
+void swap(Delivery *a, Delivery *b);
+int partition(Delivery *deliveries, int low, int high);
+void custom_qsort(Delivery *deliveries, int low, int high);
+int time_to_minutes(const char *time);
