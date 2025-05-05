@@ -3,7 +3,7 @@
 // Estrategia: Earliest Deadline First (EDF)
 void schedule_edf(Delivery *deliveries, int n_deliveries, Vehicle *vehicles, int n_vehicles)
 {
-    custom_qsort(deliveries, 0, n_deliveries - 1); // Usar Quick Sort personalizado
+    custom_qsort_time(deliveries, 0, n_deliveries - 1); // Usar Quick Sort personalizado
     fprintf(stdout, "\n--- Estrategia: Earliest Deadline First (EDF) ---\n\n");
     assign_vehicles_to_deliveries(deliveries, n_deliveries, vehicles, n_vehicles, EARLIEST_DEADLINE_FIRST);
 }

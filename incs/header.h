@@ -91,15 +91,17 @@ void calculate_vehicle_utilization(Vehicle *, int);
 
 // Funciones de ordenamiento.
 void swap(Delivery *, Delivery *);
-int partition(Delivery *, int, int);
-void custom_qsort(Delivery *, int, int);
+int partition_time(Delivery *, int, int);
+void custom_qsort_time(Delivery *, int, int);
+int partition_priority(Delivery *, int, int);
+void custom_qsort_priority(Delivery *, int, int);
 
 // Funciones Earliest Deadline First
 void schedule_edf(Delivery *, int, Vehicle *, int);
 int compare_deadlines(const void *, const void *);
 
 // Funciones Priority-Based
-void schedule_priority(Delivery *, int, Vehicle *, int);
+void schedule_based_priority(Delivery *, int, Vehicle *, int);
 int compare_by_priority(const void *, const void *);
 
 // Funciones Nearest Neighbor

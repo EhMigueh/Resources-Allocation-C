@@ -54,7 +54,6 @@ void assign_vehicles_to_deliveries(Delivery *deliveries, int n_deliveries, Vehic
                     }
                     break;
                 }
-
                 case EARLIEST_DEADLINE_FIRST:
                 {
                     int delivery_deadline = time_to_minutes(deliveries[i].end);
@@ -71,7 +70,17 @@ void assign_vehicles_to_deliveries(Delivery *deliveries, int n_deliveries, Vehic
 
                     break;
                 }
+                case PRIORITY_BASED:
+                {
+                    float distance_to_origin = calculate_distance(vehicles[j].pos_x, vehicles[j].pos_y, deliveries[i].origin_x, deliveries[i].origin_y);
 
+                    if (distance_to_origin < min_distance)
+                    {
+                        min_distance = distance_to_origin;
+                        best_vehicle = j;
+                    }
+                    break;
+                }
                 default:
                 {
                     float distance = calculate_distance(vehicles[j].pos_x, vehicles[j].pos_y, deliveries[i].origin_x, deliveries[i].origin_y);

@@ -31,7 +31,7 @@ int main(void)
         schedule_edf(deliveries, n_deliveries, vehicles, n_vehicles);
         break;
     case 2:
-        schedule_priority(deliveries, n_deliveries, vehicles, n_vehicles);
+        schedule_based_priority(deliveries, n_deliveries, vehicles, n_vehicles);
         break;
     case 3:
         schedule_nearest_neighbor(deliveries, n_deliveries, vehicles, n_vehicles);
