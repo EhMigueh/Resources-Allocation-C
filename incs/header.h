@@ -44,6 +44,7 @@ typedef struct
     float pos_x;
     float pos_y;
     int speciality;
+    int deliveries_assigned; // Este nuevo campo, es para la optimizacion de balanceo de carga
 } Vehicle;
 
 // Tipos de algoritmos

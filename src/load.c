@@ -103,6 +103,7 @@ int load_vehicle(const char *filename, Vehicle **vehicles)
         // Inicializar las capacidades originales
         temp_vehicles[count].original_volume = temp_vehicles[count].capacity_volume;
         temp_vehicles[count].original_weight = temp_vehicles[count].capacity_weight;
+        temp_vehicles[count].deliveries_assigned = 0;
 
         count++;
     }
