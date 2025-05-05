@@ -1,13 +1,5 @@
 #include "header.h"
 
-// Función para eliminar el salto de línea al final de una cadena, si existe
-void delete_line_leap(char *line)
-{
-    char *newline = strchr(line, '\n');
-    if (newline)
-        *newline = '\0'; // Reemplaza el salto de línea con un terminador nulo
-}
-
 // Función para cargar las entregas desde el CSV
 int load_delivery(const char *filename, Delivery **deliveries)
 {

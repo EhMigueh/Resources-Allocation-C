@@ -31,16 +31,14 @@ int main(void)
         schedule_edf(deliveries, n_deliveries, vehicles, n_vehicles);
         break;
     case 2:
-        schedule_spt(deliveries, n_deliveries, vehicles, n_vehicles);
-        break;
-    case 3:
         schedule_priority(deliveries, n_deliveries, vehicles, n_vehicles);
         break;
-    case 4:
+    case 3:
         schedule_nearest_neighbor(deliveries, n_deliveries, vehicles, n_vehicles);
         break;
     default:
-        fprintf(stdout, "Opción no válida. Seleccione otra opción.\n");
+        fprintf(stdout, YELLOW_COLOR "\nOpción no válida. Seleccione otra opción.\n\n" RESET_COLOR);
+        exit(EXIT_FAILURE); // TEMPORAL
         break;
     }
 

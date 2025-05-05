@@ -11,6 +11,7 @@
 
 #define RESET_COLOR "\x1b[0m"
 #define RED_COLOR "\x1b[31m"
+#define YELLOW_COLOR "\x1b[33m"
 
 // Estructura que representa una entrega
 typedef struct
@@ -53,7 +54,6 @@ typedef enum
     NEAREST_NEIGHBOR,
     PRIORITY_BASED,
     EARLIEST_DEADLINE_FIRST,
-    SHORTEST_PROCESSING_TIME
 } SchedulingMode;
 
 // Funciones de errores.
@@ -74,36 +74,44 @@ void error_vehicle_type(void);
 
 // Funciones auxiliares.
 void menu_scheduling(void);
-void print_deliveries_and_vehicles(Delivery *, Vehicle *, int, int);
+void delete_line_leap(char *);
+void validate_vehicle_data(Vehicle *, int);
+int time_to_minutes(const char *);
 
 // Funciones de carga de datos.
-void delete_line_leap(char *);
 int load_delivery(const char *, Delivery **);
 int load_vehicle(const char *, Vehicle **);
-void export_assignments_to_csv(const char *filename, Delivery *deliveries, int n_deliveries, Vehicle *vehicles, int n_vehicles);
-void export_metrics_to_csv(const char *filename, int completed_deliveries, int total_deliveries, float total_distance, float total_wait_time, double execution_time);
 
 // Funciones relacionadas con vehículos.
-void validate_vehicle_data(Vehicle *, int);
-void assign_vehicles_to_deliveries(Delivery *deliveries, int n_deliveries, Vehicle *vehicles, int n_vehicles, SchedulingMode mode);
+void assign_vehicles_to_deliveries(Delivery *, int, Vehicle *, int, SchedulingMode);
 void calculate_total_distance(Vehicle *, int, Delivery *, int);
-float calculate_distance(float x1, float y1, float x2, float y2);
-void simulate_delays(Delivery *deliveries, int n_deliveries, int delay_minutes);
-void calculate_vehicle_utilization(Vehicle *vehicles, int n_vehicles);
+float calculate_distance(float, float, float, float);
+void simulate_delays(Delivery *, int, int);
+void calculate_vehicle_utilization(Vehicle *, int);
 
-// Funciones nuevas.
-void schedule_edf(Delivery *deliveries, int n_deliveries, Vehicle *vehicles, int n_vehicles);
-void schedule_spt(Delivery *deliveries, int n_deliveries, Vehicle *vehicles, int n_vehicles);
-void schedule_priority(Delivery *deliveries, int n_deliveries, Vehicle *vehicles, int n_vehicles);
-void schedule_nearest_neighbor(Delivery *deliveries, int n_deliveries, Vehicle *vehicles, int n_vehicles);
+// Funciones de ordenamiento.
+void swap(Delivery *, Delivery *);
+int partition(Delivery *, int, int);
+void custom_qsort(Delivery *, int, int);
 
-int compare_by_end(const void *a, const void *b);
-int compare_by_duration(const void *a, const void *b);
-int compare_by_priority(const void *a, const void *b);
-int compare_deadlines(const void *a, const void *b);
+// Funciones Earliest Deadline First
+void schedule_edf(Delivery *, int, Vehicle *, int);
+int compare_deadlines(const void *, const void *);
 
-void sort_by_end(Delivery *deliveries, int n_deliveries);
-void swap(Delivery *a, Delivery *b);
-int partition(Delivery *deliveries, int low, int high);
-void custom_qsort(Delivery *deliveries, int low, int high);
-int time_to_minutes(const char *time);
+// Funciones Priority-Based
+void schedule_priority(Delivery *, int, Vehicle *, int);
+int compare_by_priority(const void *, const void *);
+
+// Funciones Nearest Neighbor
+void schedule_nearest_neighbor(Delivery *, int, Vehicle *, int);
+
+// NI IDEA DE DÓNDE SALE ESTO...
+/*
+void export_assignments_to_csv(const char *, Delivery *, int, Vehicle *, int);
+void export_metrics_to_csv(const char *, int, int, float, float, double);
+
+void sort_by_end(Delivery *, int);
+int compare_by_end(const void *, const void *);
+
+int compare_by_duration(const void *, const void *);
+*/
