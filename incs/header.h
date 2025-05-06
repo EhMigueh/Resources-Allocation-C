@@ -111,9 +111,4 @@ void schedule_nearest_neighbor(Delivery *, int, Vehicle *, int);
 /*
 void export_assignments_to_csv(const char *, Delivery *, int, Vehicle *, int);
 void export_metrics_to_csv(const char *, int, int, float, float, double);
-
-void sort_by_end(Delivery *, int);
-int compare_by_end(const void *, const void *);
-
-int compare_by_duration(const void *, const void *);
 */

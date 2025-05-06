@@ -19,11 +19,15 @@ int main(void)
 
     // Menú para seleccionar la estrategia de scheduling (TEMPORAL)
     int choice;
-    menu_scheduling();
-
+    fprintf(stdout, "\nSeleccione la estrategia de scheduling:\n\n");
+    fprintf(stdout, "1. Earliest Deadline First (EDF)\n");
+    fprintf(stdout, "2. Priority-Based Scheduling\n");
+    fprintf(stdout, "3. Nearest Neighbor\n");
+    fprintf(stdout, "\nIngrese su elección: ");
+    
     if (scanf("%d", &choice) != 1)
         error_selection_choice(deliveries, vehicles);
-
+  
     // Ejecutar la estrategia seleccionada (TEMPORAL)
     switch (choice)
     {

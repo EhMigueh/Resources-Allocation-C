@@ -105,3 +105,23 @@ int load_vehicle(const char *filename, Vehicle **vehicles)
 
     return count; // Devuelve el número de vehículos cargados
 }
+
+// Función para eliminar el salto de línea al final de una cadena, si existe
+void delete_line_leap(char *line)
+{
+    char *newline = strchr(line, '\n');
+    if (newline)
+        *newline = '\0'; // Reemplaza el salto de línea con un terminador nulo
+}
+
+// Validar los datos de los vehículos, esto siempre debería estar bien
+void validate_vehicle_data(Vehicle *vehicles, int n_vehicles)
+{
+    for (int i = 0; i < n_vehicles; i++)
+    {
+        if (vehicles[i].capacity_volume <= 0 || vehicles[i].capacity_weight <= 0)
+            error_vehicle_capacity();
+        if (vehicles[i].type < 1 || vehicles[i].type > 3)
+            error_vehicle_type();
+    }
+}

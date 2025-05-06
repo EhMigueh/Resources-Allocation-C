@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "Makefile": "cpp",
+        "header.h": "c"
+    }
+}

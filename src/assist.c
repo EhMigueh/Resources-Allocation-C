@@ -1,35 +1,5 @@
 #include "header.h"
 
-// Menú principal para seleccionar la estrategia de scheduling (TEMPORAL)
-void menu_scheduling()
-{
-    fprintf(stdout, "\nSeleccione la estrategia de scheduling:\n\n");
-    fprintf(stdout, "1. Earliest Deadline First (EDF)\n");
-    fprintf(stdout, "2. Priority-Based Scheduling\n");
-    fprintf(stdout, "3. Nearest Neighbor\n");
-    fprintf(stdout, "\nIngrese su elección: ");
-}
-
-// Función para eliminar el salto de línea al final de una cadena, si existe
-void delete_line_leap(char *line)
-{
-    char *newline = strchr(line, '\n');
-    if (newline)
-        *newline = '\0'; // Reemplaza el salto de línea con un terminador nulo
-}
-
-// Validar los datos de los vehículos, esto siempre debería estar bien
-void validate_vehicle_data(Vehicle *vehicles, int n_vehicles)
-{
-    for (int i = 0; i < n_vehicles; i++)
-    {
-        if (vehicles[i].capacity_volume <= 0 || vehicles[i].capacity_weight <= 0)
-            error_vehicle_capacity();
-        if (vehicles[i].type < 1 || vehicles[i].type > 3)
-            error_vehicle_type();
-    }
-}
-
 // Calcular la distancia entre dos puntos (x1, y1) y (x2, y2)
 float calculate_distance(float x1, float y1, float x2, float y2)
 {
