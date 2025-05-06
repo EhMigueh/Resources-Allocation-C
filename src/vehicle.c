@@ -19,6 +19,7 @@ void assign_vehicles_to_deliveries(Delivery *deliveries, int n_deliveries, Vehic
         int assigned = 0;
         int best_vehicle = -1;
         float min_distance = FLT_MAX;
+        float best_real_distance = FLT_MAX;
 
         for (int j = 0; j < n_vehicles; j++)
         {
@@ -32,33 +33,48 @@ void assign_vehicles_to_deliveries(Delivery *deliveries, int n_deliveries, Vehic
                 {
                 case NEAREST_NEIGHBOR:
                 {
-                    float distance_to_origin = calculate_distance(vehicles[j].pos_x, vehicles[j].pos_y, deliveries[i].origin_x, deliveries[i].origin_y);
+                    float distance_to_origin = calculate_distance(
+                        vehicles[j].pos_x,
+                        vehicles[j].pos_y,
+                        deliveries[i].origin_x,
+                        deliveries[i].origin_y);
+
+                    float delivery_distance = calculate_distance(
+                        deliveries[i].origin_x,
+                        deliveries[i].origin_y,
+                        deliveries[i].destination_x,
+                        deliveries[i].destination_y);
+
+                    float real_distance = distance_to_origin + delivery_distance;
+
                     int vehicle_available_time = time_to_minutes(vehicles[j].start);
                     int delivery_start_time = time_to_minutes(deliveries[i].start);
                     float time_difference = delivery_start_time - vehicle_available_time;
-
-                    float volume_util = 1.0f - (vehicles[j].capacity_volume / vehicles[j].original_volume); // mide cuan lleno esta el vehiculo con respecto al volumen total
-                    float weight_util = 1.0f - (vehicles[j].capacity_weight / vehicles[j].original_weight); // midel cuan lleno esta el vehiclo con respecto al pso maximo
-                    float utilization_score = (volume_util + weight_util) / 2.0f;                           // promedio de volumen y peso utilizado, si utilization_score es bajo, queda poca capacidad
-
-                    float score = distance_to_origin + (0.5f * time_difference) + (5.0f * vehicles[j].deliveries_assigned) + (10.0f * utilization_score); // intento de mejor asignacion
-
                     if (time_difference < 0)
                         time_difference = 0;
 
-                    // float score = distance_to_origin + (0.5f * time_difference) + (5.0f * vehicles[j].deliveries_assigned);
+                    float volume_util = 1.0f - (vehicles[j].capacity_volume / vehicles[j].original_volume);
+                    float weight_util = 1.0f - (vehicles[j].capacity_weight / vehicles[j].original_weight);
+                    float utilization_score = (volume_util + weight_util) / 2.0f;
+
+                    float score = distance_to_origin + (0.5f * time_difference) + (5.0f * vehicles[j].deliveries_assigned) + (10.0f * utilization_score);
+
                     if (score < min_distance)
                     {
                         min_distance = score;
                         best_vehicle = j;
+                        best_real_distance = real_distance;
                     }
                     break;
                 }
+
                 case EARLIEST_DEADLINE_FIRST:
                 {
                     int delivery_deadline = time_to_minutes(deliveries[i].end);
                     // int vehicle_available_time = time_to_minutes(vehicles[j].start);
                     float distance_to_origin = calculate_distance(vehicles[j].pos_x, vehicles[j].pos_y, deliveries[i].origin_x, deliveries[i].origin_y);
+                    float delivery_distance = calculate_distance(deliveries[i].origin_x, deliveries[i].origin_y, deliveries[i].destination_x, deliveries[i].destination_y);
+                    float real_distance = distance_to_origin + delivery_distance;
 
                     float urgency_score = delivery_deadline + distance_to_origin;
 
@@ -66,6 +82,7 @@ void assign_vehicles_to_deliveries(Delivery *deliveries, int n_deliveries, Vehic
                     {
                         min_distance = urgency_score;
                         best_vehicle = j;
+                        best_real_distance = real_distance;
                     }
 
                     break;
@@ -73,11 +90,14 @@ void assign_vehicles_to_deliveries(Delivery *deliveries, int n_deliveries, Vehic
                 case PRIORITY_BASED:
                 {
                     float distance_to_origin = calculate_distance(vehicles[j].pos_x, vehicles[j].pos_y, deliveries[i].origin_x, deliveries[i].origin_y);
+                    float delivery_distance = calculate_distance(deliveries[i].origin_x, deliveries[i].origin_y, deliveries[i].destination_x, deliveries[i].destination_y);
+                    float real_distance = distance_to_origin + delivery_distance;
 
-                    if (distance_to_origin < min_distance)
+                    if (real_distance < min_distance)
                     {
                         min_distance = distance_to_origin;
                         best_vehicle = j;
+                        best_real_distance = real_distance;
                     }
                     break;
                 }
@@ -108,9 +128,11 @@ void assign_vehicles_to_deliveries(Delivery *deliveries, int n_deliveries, Vehic
 
             completed_deliveries++;
             total_wait_time += wait_time;
-            total_distance += min_distance;
+            // total_distance += min_distance; esto esta comentado porque se estan probando cosas
+            total_distance += best_real_distance;
 
-            vehicles[j].deliveries_assigned++;
+            vehicles[j]
+                .deliveries_assigned++;
             vehicles[j].capacity_volume -= deliveries[i].volume;
             vehicles[j].capacity_weight -= deliveries[i].weight;
 
@@ -146,8 +168,7 @@ void assign_vehicles_to_deliveries(Delivery *deliveries, int n_deliveries, Vehic
                 }
             }
         }
-
-        if (!assigned)
+        else if (!assigned)
         {
             fprintf(stdout, "No se pudo asignar un vehículo para la entrega %s\n\n", deliveries[i].id);
         }
