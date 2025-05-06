@@ -112,3 +112,6 @@ void schedule_nearest_neighbor(Delivery *, int, Vehicle *, int);
 void export_assignments_to_csv(const char *, Delivery *, int, Vehicle *, int);
 void export_metrics_to_csv(const char *, int, int, float, float, double);
 */
+
+// Funciones relacionadas con EDF
+void assign_edf(Delivery *, int, Vehicle *, int);
