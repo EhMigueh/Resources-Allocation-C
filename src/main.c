@@ -1,6 +1,6 @@
 #include "header.h"
 
-int main(void)
+int main(int argc, char *argv[])
 {
     Delivery *deliveries = NULL;
     Vehicle *vehicles = NULL;
@@ -17,34 +17,8 @@ int main(void)
     // Validar los datos de los vehículos
     validate_vehicle_data(vehicles, n_vehicles);
 
-    // Menú para seleccionar la estrategia de scheduling (TEMPORAL)
-    int choice;
-    fprintf(stdout, "\nSeleccione la estrategia de scheduling:\n\n");
-    fprintf(stdout, "1. Earliest Deadline First (EDF)\n");
-    fprintf(stdout, "2. Priority-Based Scheduling\n");
-    fprintf(stdout, "3. Nearest Neighbor\n");
-    fprintf(stdout, "\nIngrese su elección: ");
-    
-    if (scanf("%d", &choice) != 1)
-        error_selection_choice(deliveries, vehicles);
-  
-    // Ejecutar la estrategia seleccionada (TEMPORAL)
-    switch (choice)
-    {
-    case 1:
-        schedule_edf(deliveries, n_deliveries, vehicles, n_vehicles);
-        break;
-    case 2:
-        schedule_based_priority(deliveries, n_deliveries, vehicles, n_vehicles);
-        break;
-    case 3:
-        schedule_nearest_neighbor(deliveries, n_deliveries, vehicles, n_vehicles);
-        break;
-    default:
-        fprintf(stdout, YELLOW_COLOR "\nOpción no válida. Seleccione otra opción.\n\n" RESET_COLOR);
-        exit(EXIT_FAILURE); // TEMPORAL
-        break;
-    }
+    // Procesar los argumentos de la línea de comandos
+    process_command(argc, argv, deliveries, n_deliveries, vehicles, n_vehicles);
 
     // Calcular la distancia total recorrida por los vehículos
     calculate_total_distance(vehicles, n_vehicles, deliveries, n_deliveries);

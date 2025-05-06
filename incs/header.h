@@ -64,7 +64,6 @@ void error_malloc_delivery(Delivery *, FILE *);
 void error_malloc_vehicle(Vehicle *, FILE *);
 void error_read_top_delivery(FILE *, Delivery *);
 void error_read_top_vehicle(FILE *, Vehicle *);
-void error_selection_choice(Delivery *, Vehicle *);
 void error_format_delivery(const char *);
 void error_format_vehicle(const char *);
 void error_parse_delivery(int, const char *);
@@ -99,6 +98,7 @@ void custom_qsort_priority(Delivery *, int, int);
 // Funciones Earliest Deadline First
 void schedule_edf(Delivery *, int, Vehicle *, int);
 int compare_deadlines(const void *, const void *);
+void assign_edf(Delivery *, int, Vehicle *, int);
 
 // Funciones Priority-Based
 void schedule_based_priority(Delivery *, int, Vehicle *, int);
@@ -113,5 +113,6 @@ void export_assignments_to_csv(const char *, Delivery *, int, Vehicle *, int);
 void export_metrics_to_csv(const char *, int, int, float, float, double);
 */
 
-// Funciones relacionadas con EDF
-void assign_edf(Delivery *, int, Vehicle *, int);
+// Funciones relacionadas con comandos
+void show_help();
+void process_command(int argc, char *argv[], Delivery *deliveries, int n_deliveries, Vehicle *vehicles, int n_vehicles);
