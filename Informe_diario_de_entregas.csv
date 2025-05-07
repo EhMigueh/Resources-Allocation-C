@@ -1,23 +1,17 @@
-<!DOCTYPE html>
-<html><head><meta charset="UTF-8">
-<style>body { font-family: Arial, sans-serif; margin: 40px; }h1, h2 { color: #333; }table { border-collapse: collapse; width: 100%; margin-top: 20px; }th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }th { background-color: #f2f2f2; }</style>
-</head><body>
-<h1>Entregas Don Pepito</h1>
-<p><strong>RUT:</strong> 11.111.111-7</p>
-<p><strong>Fecha del informe:</strong> 2025-05-07</p>
-<h2>Informe de Operaciones Logísticas</h2>
-<table>
-<tr><th>ID Entrega</th><th>ID Vehículo</th><th>Volumen</th><th>Peso</th><th>Distancia Real (km)</th><th>Tiempo de Espera (min)</th><th>Entregas Asignadas</th><th>Volumen Restante</th><th>Peso Restante</th></tr>
-<tr><td>D001</td><td>V003</td><td>2.93</td><td>13.43</td><td>19.93</td><td>0.00</td><td>1</td><td>8.65</td><td>42.98</td></tr>
-<tr><td>D003</td><td>V013</td><td>3.10</td><td>10.11</td><td>4.70</td><td>0.00</td><td>1</td><td>2.75</td><td>49.27</td></tr>
-<tr><td>D005</td><td>V014</td><td>1.29</td><td>17.48</td><td>37.74</td><td>0.00</td><td>1</td><td>7.49</td><td>14.92</td></tr>
-<tr><td>D006</td><td>V010</td><td>2.49</td><td>6.03</td><td>30.33</td><td>30.00</td><td>2</td><td>3.10</td><td>7.10</td></tr>
-<tr><td>D008</td><td>V004</td><td>2.36</td><td>11.46</td><td>24.27</td><td>90.00</td><td>1</td><td>3.72</td><td>19.02</td></tr>
-<tr><td>D009</td><td>V015</td><td>1.17</td><td>12.72</td><td>24.41</td><td>0.00</td><td>1</td><td>10.49</td><td>45.56</td></tr>
-<tr><td>D010</td><td>V012</td><td>1.87</td><td>16.01</td><td>48.05</td><td>105.00</td><td>3</td><td>2.53</td><td>8.32</td></tr>
-<tr><td>D012</td><td>V011</td><td>2.97</td><td>17.44</td><td>26.33</td><td>0.00</td><td>1</td><td>7.25</td><td>11.57</td></tr>
-<tr><td>D013</td><td>V005</td><td>3.67</td><td>13.99</td><td>10.24</td><td>60.00</td><td>2</td><td>3.19</td><td>16.68</td></tr>
-<tr><td>D014</td><td>V001</td><td>1.71</td><td>10.43</td><td>28.35</td><td>120.00</td><td>1</td><td>4.90</td><td>27.60</td></tr>
-<tr><td>D015</td><td>V009</td><td>2.56</td><td>10.55</td><td>26.51</td><td>30.00</td><td>1</td><td>6.86</td><td>24.79</td></tr>
-</table>
-</body></html>
+ID Entrega,ID Vehículo,Volumen,Peso,Distancia Real (km),Tiempo de Espera (min),Entregas Asignadas,Capacidad Volumen Restante,Capacidad Peso Restante
+D001,V010,1.41,13.50,27.20,0.00,1,9.87,11.80
+D008,V009,2.43,11.21,35.93,15.00,2,5.75,4.81
+D009,V014,1.92,13.54,11.94,0.00,2,5.22,10.52
+D010,V011,3.90,7.95,15.97,0.00,1,6.90,30.29
+D011,V012,1.18,17.28,32.27,75.00,2,5.50,1.20
+D012,V015,1.73,7.00,31.65,0.00,2,5.07,7.89
+D013,V004,2.52,14.08,23.26,0.00,1,7.18,43.91
+D014,V008,1.50,7.50,23.78,15.00,1,6.79,44.18
+D015,V002,1.07,5.78,46.64,0.00,3,3.99,19.00
+INFORME DE OPERACIONES LOGÍSTICAS
+----------------------------------
+Empresa: Entregas Don Pepito
+RUT: 11.111.111-7
+Fecha del informe: 2025-05-07
+
+----------------------------------
