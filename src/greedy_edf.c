@@ -3,7 +3,7 @@
 // Estrategia: Earliest Deadline First (EDF)
 void schedule_edf(Delivery *deliveries, int n_deliveries, Vehicle *vehicles, int n_vehicles)
 {
-    custom_qsort_time(deliveries, 0, n_deliveries - 1); 
+    custom_qsort(deliveries, 0, n_deliveries - 1, EARLIEST_DEADLINE_FIRST);
     fprintf(stdout, "\n--- Estrategia: Earliest Deadline First (EDF) ---\n\n");
     assign_edf(deliveries, n_deliveries, vehicles, n_vehicles);
 }
@@ -84,6 +84,7 @@ void assign_edf(Delivery *deliveries, int n_deliveries, Vehicle *vehicles, int n
     fprintf(stdout, "Tiempo de ejecución del algoritmo: %.6f segundos\n", execution_time);
 }
 
+// Función de comparación para ordenar entregas por fecha límite
 int compare_deadlines(const void *a, const void *b)
 {
     Delivery *d1 = (Delivery *)a;

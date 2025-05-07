@@ -12,6 +12,8 @@
 #define RESET_COLOR "\x1b[0m"
 #define RED_COLOR "\x1b[31m"
 #define YELLOW_COLOR "\x1b[33m"
+#define CYAN_COLOR "\x1b[36m"
+#define GREEN_COLOR "\x1b[32m"
 
 // Estructura que representa una entrega
 typedef struct
@@ -84,10 +86,8 @@ void assign_vehicles_to_deliveries(Delivery *, int, Vehicle *, int, SchedulingMo
 
 // Funciones de ordenamiento.
 void swap(Delivery *, Delivery *);
-int partition_time(Delivery *, int, int);
-void custom_qsort_time(Delivery *, int, int);
-int partition_priority(Delivery *, int, int);
-void custom_qsort_priority(Delivery *, int, int);
+int partition(Delivery *, int, int, SchedulingMode);
+void custom_qsort(Delivery *, int, int, SchedulingMode);
 
 // Funciones Earliest Deadline First
 void schedule_edf(Delivery *, int, Vehicle *, int);
@@ -111,6 +111,8 @@ void error_format(const char *, const char *);
 void error_parse(int, const char *, DataType);
 void error_vehicle_capacity(void);
 void error_vehicle_type(void);
+void error_no_arguments(void);
+void error_invalid_option(void);
 
 // NI IDEA DE DÓNDE SALE ESTO...
 /*

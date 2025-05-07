@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
     int n_vehicles = load_csv_data("input/vehicles.csv", (void **)&vehicles, DATA_VEHICLE);
     error_load_data(n_vehicles, DATA_VEHICLE, deliveries);
 
-    fprintf(stdout, "\nSe han cargado %d entregas y %d vehículos.\n", n_deliveries, n_vehicles);
+    fprintf(stdout, GREEN_COLOR "\nSe han cargado %d entregas y %d vehículos.\n" RESET_COLOR, n_deliveries, n_vehicles);
 
     // Validar los datos de los vehículos
     validate_vehicle_data(vehicles, n_vehicles);

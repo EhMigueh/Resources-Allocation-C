@@ -1,5 +1,6 @@
 #include "header.h"
 
+// Asignar todas las entregas a los vehículos. Varía segun la estrategia que se eliga.
 void assign_vehicles_to_deliveries(Delivery *deliveries, int n_deliveries, Vehicle *vehicles, int n_vehicles, SchedulingMode mode)
 {
     if (mode == EARLIEST_DEADLINE_FIRST)

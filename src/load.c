@@ -11,6 +11,7 @@ int load_csv_data(const char *filename, void **data, DataType type)
     int capacity = 10;
     void *temp_data = NULL;
 
+    // Pedir memoria para el arreglo de datos y Leer la primera línea del archivo para determinar el tipo de datos
     if (type == DATA_DELIVERY)
     {
         temp_data = malloc(capacity * sizeof(Delivery));
@@ -24,12 +25,14 @@ int load_csv_data(const char *filename, void **data, DataType type)
         error_read_header(file, NULL, temp_data, type, line);
     }
 
+    // Leer el resto de las líneas del archivo
     while (fgets(line, MAX_LINE_LENGTH, file))
     {
         if (count == capacity)
         {
             capacity *= 2;
             temp_data = realloc(temp_data, (type == DATA_DELIVERY ? sizeof(Delivery) : sizeof(Vehicle)) * capacity);
+            // Verificar si la memoria se asignó correctamente
             if (type == DATA_DELIVERY)
                 error_malloc(temp_data, temp_data, file, type);
             else
@@ -38,14 +41,17 @@ int load_csv_data(const char *filename, void **data, DataType type)
 
         delete_line_leap(line);
 
+        // Parsear la línea dependiendo del tipo de datos
         if (type == DATA_DELIVERY)
         {
+            // Si es una entrega, parsear y asignar. En caso de error en el formato o en el parseo, se lanza un error
             error_format(line, filename);
             int parsed = parse_delivery(line, &((Delivery *)temp_data)[count]);
             error_parse(parsed, line, type);
         }
         else
         {
+            // Si es un vehículo, parsear y asignar. En caso de error en el formato o en el parseo, se lanza un error. Se asigna el volumen y peso originales
             error_format(line, filename);
             int parsed = parse_vehicle(line, &((Vehicle *)temp_data)[count]);
             error_parse(parsed, line, type);
