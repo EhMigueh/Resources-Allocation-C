@@ -126,6 +126,9 @@ void error_vehicle_type(void);
 void error_no_arguments(void);
 void error_invalid_option(void);
 
+// Funcion para exportar csv
+void exportar_informe_csv(const char *nombre_archivo, Delivery *deliveries, int n_deliveries, Vehicle *vehicles, int n_vehicles);
+
 // NI IDEA DE DÓNDE SALE ESTO...
 /*
 void export_assignments_to_csv(const char *, Delivery *, int, Vehicle *, int);

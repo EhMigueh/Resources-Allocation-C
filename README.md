@@ -13,4 +13,4 @@
 ### 3. Diego Sanhueza 🤓
 - Estudiante de Ingeniería Informática
 - [Diego Sanhueza](https://github.com/Diego0119)
-- **@umag.cl**
+- **disanhue@umag.cl**
