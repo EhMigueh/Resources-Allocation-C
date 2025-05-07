@@ -4,6 +4,7 @@ int main(int argc, char *argv[])
 {
     Delivery *deliveries = NULL;
     Vehicle *vehicles = NULL;
+    srand((unsigned int)time(NULL));
 
     // Cargar entregas y vehículos desde los archivos CSV
     int n_deliveries = load_csv_data("input/deliveries.csv", (void **)&deliveries, DATA_DELIVERY);

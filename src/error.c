@@ -16,6 +16,12 @@ void error_open_file(FILE *file, const char *filename)
         fatal_error("No se pudo abrir el archivo", "Revise el nombre del archivo o su ruta", filename);
 }
 
+void error_create_file(FILE *file, const char *filename)
+{
+    if (!file)
+        fatal_error("No se pudo crear el archivo", "Revise el nombre del archivo o su ruta", filename);
+}
+
 // Se muestra cuando no se pueden cargar los datos desde el archivo CSV
 void error_load_data(int n, DataType type, Delivery *deliveries)
 {

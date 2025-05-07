@@ -25,12 +25,7 @@ void process_command(int argc, char *argv[], Delivery *deliveries, int n_deliver
     if (strcmp(argv[1], "--h") == 0 || strcmp(argv[1], "--help") == 0)
         show_help();
     else if (strcmp(argv[1], "--db") == 0 || strcmp(argv[1], "--database") == 0)
-    {
-        fprintf(stdout, YELLOW_COLOR "Creando bases de datos aleatorias...\n" RESET_COLOR);
-        // Aquí se llamaría a la función para crear las bases de datos aleatorias
-        // create_random_databases();
-        exit(EXIT_SUCCESS);
-    }
+        create_random_databases();
     else if (strcmp(argv[1], "--edf") == 0)
         schedule_edf(deliveries, n_deliveries, vehicles, n_vehicles);
     else if (strcmp(argv[1], "--pb") == 0 || strcmp(argv[1], "--priority") == 0)
