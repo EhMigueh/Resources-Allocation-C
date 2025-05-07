@@ -1,113 +1,83 @@
 #include "header.h"
 
-void error_load_delivery(int n_deliveries)
+void fatal_error(const char *header, const char *detail, const char *filename)
 {
-    if (n_deliveries == 0)
-    {
-        fprintf(stderr, RED_COLOR "\nERROR! No se pudieron cargar las tareas.\n");
-        fprintf(stderr, "Revise el archivo deliveries.csv o las funcion load_delivery.\n\n" RESET_COLOR);
-        exit(EXIT_FAILURE);
-    }
-}
-
-void error_load_vehicle(int n_vehicles, Delivery *deliveries)
-{
-    if (n_vehicles == 0)
-    {
-        fprintf(stderr, RED_COLOR "\nERROR! No se pudieron cargar los vehiculos.\n");
-        fprintf(stderr, "Revise el archivo vehicles.csv o las funcion load_vehicle.\n\n" RESET_COLOR);
-        free(deliveries);
-        exit(EXIT_FAILURE);
-    }
+    fprintf(stderr, RED_COLOR "\nERROR! %s\n", header);
+    fprintf(stderr, "%s\n", detail);
+    fprintf(stderr, "Posible ERROR en el archivo -> %s.\n\n" RESET_COLOR, filename);
+    exit(EXIT_FAILURE);
 }
 
 void error_open_file(FILE *file, const char *filename)
 {
     if (!file)
+        fatal_error("No se pudo abrir el archivo", "Revise el nombre del archivo o su ruta", filename);
+}
+
+void error_load_data(int n, DataType type, Delivery *deliveries)
+{
+    if (type == DATA_DELIVERY && n == 0)
+        fatal_error("No se pudieron cargar las entregas", "Revise el archivo deliveries.csv o la función load_csv_data/parse_deliveries", "input/deliveries.csv o load.c");
+    else if (type == DATA_VEHICLE && n == 0)
     {
-        fprintf(stderr, RED_COLOR "\nERROR! No se pudo abrir el archivo %s.\n\n" RESET_COLOR, filename);
-        exit(EXIT_FAILURE);
+        fatal_error("No se pudieron cargar los vehículos", "Revise el archivo vehicles.csv o la función load_csv_data/parse_vehicles", "input/vehicles.csv o load.c");
+        free(deliveries);
     }
 }
 
-void error_malloc_delivery(Delivery *temp, FILE *file)
+void error_malloc(Delivery *tempdelivery, Vehicle *tempvehicle, FILE *file, DataType type)
 {
-    if (!temp)
+    if (type == DATA_DELIVERY && !tempdelivery)
     {
-        fprintf(stderr, RED_COLOR "\nERROR! No se pudo asignar memoria para las entregas.\n\n" RESET_COLOR);
         fclose(file);
-        exit(EXIT_FAILURE);
+        fatal_error("No se pudo asignar memoria para las entregas", "Revise el archivo deliveries.csv o la función load_csv_data", "input/deliveries.csv o load.c");
     }
-}
-
-void error_malloc_vehicle(Vehicle *temp, FILE *file)
-{
-    if (!temp)
+    else if (type == DATA_VEHICLE && !tempvehicle)
     {
-        fprintf(stderr, RED_COLOR "\nERROR! No se pudo asignar memoria para los vehiculos.\n\n" RESET_COLOR);
         fclose(file);
-        exit(EXIT_FAILURE);
+        fatal_error("No se pudo asignar memoria para los vehículos", "Revise el archivo vehicles.csv o la función load_csv_data", "input/vehicles.csv o load.c");
     }
 }
 
-void error_read_top_delivery(FILE *file, Delivery *temp_deliveries)
+void error_read_header(FILE *file, Delivery *temp_deliveries, Vehicle *temp_vehicles, DataType type, char *line)
 {
-    fclose(file);
-    free(temp_deliveries);
-    fprintf(stderr, RED_COLOR "\nERROR! No se pudieron leer las entregas.\n");
-    fprintf(stderr, "Revise el archivo deliveries.csv o la funcion load_delivery.\n\n" RESET_COLOR);
-    exit(EXIT_FAILURE);
-}
-
-void error_read_top_vehicle(FILE *file, Vehicle *temp_vehicles)
-{
-    fclose(file);
-    free(temp_vehicles);
-    fprintf(stderr, RED_COLOR "\nERROR! No se pudieron leer los vehiculos.\n");
-    fprintf(stderr, "Revise el archivo vehicles.csv o la funcion load_vehicle.\n\n" RESET_COLOR);
-    exit(EXIT_FAILURE);
-}
-
-void error_format_delivery(const char *line)
-{
-    fprintf(stderr, RED_COLOR "\nERROR! Linea mal formateada en deliveries.csv: %s\n\n" RESET_COLOR, line);
-    exit(EXIT_FAILURE);
-}
-
-void error_format_vehicle(const char *line)
-{
-    fprintf(stderr, RED_COLOR "\nERROR! Linea mal formateada en vehicles.csv: %s\n\n" RESET_COLOR, line);
-    exit(EXIT_FAILURE);
-}
-
-void error_parse_delivery(int parsed, const char *line)
-{
-    if (parsed != 12)
+    if (fgets(line, MAX_LINE_LENGTH, file) == NULL)
     {
-        fprintf(stderr, RED_COLOR "\nERROR! Error al parsear la linea en deliveries.csv: %s\n\n" RESET_COLOR, line);
-        exit(EXIT_FAILURE);
+        if (type == DATA_DELIVERY)
+        {
+            fclose(file);
+            free(temp_deliveries);
+            fatal_error("No se pudieron leer los encabezados de deliveries.csv", "Revise el archivo deliveries.csv o la función load_csv_data", "input/deliveries.csv o load.c");
+        }
+        else if (type == DATA_VEHICLE)
+        {
+            fclose(file);
+            free(temp_vehicles);
+            fatal_error("No se pudieron leer los encabezados de vehicles.csv", "Revise el archivo vehicles.csv o la función load_csv_data", "input/vehicles.csv o load.c");
+        }
     }
 }
 
-void error_parse_vehicle(int parsed, const char *line)
+void error_format(const char *line, const char *filename)
 {
-    if (parsed != 9)
-    {
-        fprintf(stderr, RED_COLOR "\nERROR! Error al parsear la linea en vehicles.csv: %s\n\n" RESET_COLOR, line);
-        exit(EXIT_FAILURE);
-    }
+    if (strchr(line, ',') == NULL)
+        fatal_error("Linea mal formateada", "Revise el archivo o la función load_csv_data", filename);
+}
+
+void error_parse(int parsed, const char *line, DataType type)
+{
+    if (type == DATA_DELIVERY && parsed != 12)
+        fatal_error("Línea mal parseada", "Revise el archivo deliveries.csv o la función parse_delivery", line);
+    else if (type == DATA_VEHICLE && parsed != 9)
+        fatal_error("Linea mal parseada", "Revise el archivo vehicles.csv o la función parse_vehicle", line);
 }
 
 void error_vehicle_capacity(void)
 {
-    fprintf(stderr, RED_COLOR "\nERROR! Capacidad del vehiculo no valida.\n");
-    fprintf(stderr, "Revise el archivo vehicles.csv o la funcion load_vehicle.\n\n" RESET_COLOR);
-    exit(EXIT_FAILURE);
+    fatal_error("Capacidad del vehículo no válida", "Revise el archivo vehicles.csv o la función validate_vehicle_data/load_csv_data", "input/vehicles.csv o load.c");
 }
 
 void error_vehicle_type(void)
 {
-    fprintf(stderr, RED_COLOR "\nERROR! Tipo de vehiculo no valido.\n");
-    fprintf(stderr, "Revise el archivo vehicles.csv o la funcion load_vehicle.\n\n" RESET_COLOR);
-    exit(EXIT_FAILURE);
+    fatal_error("Tipo de vehículo no válido", "Revise el archivo vehicles.csv o la función validate_vehicle_data/load_csv_data", "input/vehicles.csv o load.c");
 }

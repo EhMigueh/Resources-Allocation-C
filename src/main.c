@@ -7,10 +7,10 @@ int main(int argc, char *argv[])
 
     // Cargar entregas y vehículos desde los archivos CSV
     int n_deliveries = load_csv_data("input/deliveries.csv", (void **)&deliveries, DATA_DELIVERY);
-    error_load_delivery(n_deliveries);
+    error_load_data(n_deliveries, DATA_DELIVERY, NULL);
 
     int n_vehicles = load_csv_data("input/vehicles.csv", (void **)&vehicles, DATA_VEHICLE);
-    error_load_vehicle(n_vehicles, deliveries);
+    error_load_data(n_vehicles, DATA_VEHICLE, deliveries);
 
     fprintf(stdout, "\nSe han cargado %d entregas y %d vehículos.\n", n_deliveries, n_vehicles);
 

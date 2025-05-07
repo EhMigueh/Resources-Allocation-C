@@ -14,16 +14,14 @@ int load_csv_data(const char *filename, void **data, DataType type)
     if (type == DATA_DELIVERY)
     {
         temp_data = malloc(capacity * sizeof(Delivery));
-        error_malloc_delivery(temp_data, file);
-        if (fgets(line, MAX_LINE_LENGTH, file) == NULL)
-            error_read_top_delivery(file, temp_data);
+        error_malloc(temp_data, NULL, file, type);
+        error_read_header(file, temp_data, NULL, type, line);
     }
     else
     {
         temp_data = malloc(capacity * sizeof(Vehicle));
-        error_malloc_vehicle(temp_data, file);
-        if (fgets(line, MAX_LINE_LENGTH, file) == NULL)
-            error_read_top_vehicle(file, temp_data);
+        error_malloc(NULL, temp_data, file, type);
+        error_read_header(file, NULL, temp_data, type, line);
     }
 
     while (fgets(line, MAX_LINE_LENGTH, file))
@@ -33,28 +31,24 @@ int load_csv_data(const char *filename, void **data, DataType type)
             capacity *= 2;
             temp_data = realloc(temp_data, (type == DATA_DELIVERY ? sizeof(Delivery) : sizeof(Vehicle)) * capacity);
             if (type == DATA_DELIVERY)
-                error_malloc_delivery(temp_data, file);
+                error_malloc(temp_data, temp_data, file, type);
             else
-                error_malloc_vehicle(temp_data, file);
+                error_malloc(temp_data, temp_data, file, type);
         }
 
         delete_line_leap(line);
 
         if (type == DATA_DELIVERY)
         {
-            if (strchr(line, ',') == NULL)
-                error_format_delivery(line);
+            error_format(line, filename);
             int parsed = parse_delivery(line, &((Delivery *)temp_data)[count]);
-            if (parsed != 12)
-                error_format_delivery(line);
+            error_parse(parsed, line, type);
         }
         else
         {
-            if (strchr(line, ',') == NULL)
-                error_format_vehicle(line);
+            error_format(line, filename);
             int parsed = parse_vehicle(line, &((Vehicle *)temp_data)[count]);
-            if (parsed != 9)
-                error_format_vehicle(line);
+            error_parse(parsed, line, type);
             ((Vehicle *)temp_data)[count].original_volume = ((Vehicle *)temp_data)[count].capacity_volume;
             ((Vehicle *)temp_data)[count].original_weight = ((Vehicle *)temp_data)[count].capacity_weight;
             ((Vehicle *)temp_data)[count].deliveries_assigned = 0;

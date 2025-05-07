@@ -102,17 +102,13 @@ int compare_by_priority(const void *, const void *);
 void schedule_nearest_neighbor(Delivery *, int, Vehicle *, int);
 
 // Funciones de errores.
-void error_load_delivery(int);
-void error_load_vehicle(int, Delivery *);
+void fatal_error(const char *, const char *, const char *);
 void error_open_file(FILE *, const char *);
-void error_malloc_delivery(Delivery *, FILE *);
-void error_malloc_vehicle(Vehicle *, FILE *);
-void error_read_top_delivery(FILE *, Delivery *);
-void error_read_top_vehicle(FILE *, Vehicle *);
-void error_format_delivery(const char *);
-void error_format_vehicle(const char *);
-void error_parse_delivery(int, const char *);
-void error_parse_vehicle(int, const char *);
+void error_load_data(int, DataType, Delivery *);
+void error_malloc(Delivery *, Vehicle *, FILE *, DataType);
+void error_read_header(FILE *, Delivery *, Vehicle *, DataType, char *);
+void error_format(const char *, const char *);
+void error_parse(int, const char *, DataType);
 void error_vehicle_capacity(void);
 void error_vehicle_type(void);
 
