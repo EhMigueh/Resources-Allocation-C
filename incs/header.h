@@ -88,7 +88,7 @@ void schedule_based_priority(Delivery *, int, Vehicle *, int);
 int compare_by_priority(const void *, const void *);
 
 // Funciones Nearest Neighbor
-void schedule_nearest_neighbor(Delivery *, int, Vehicle *, int);
+void schedule_nearest_neighbor(Delivery *deliveries, int n_deliveries, Vehicle *vehicles, int n_vehicles);
 
 // Funciones de ordenamiento.
 void swap(Delivery *, Delivery *);
@@ -97,6 +97,7 @@ void custom_qsort(Delivery *, int, int, SchedulingMode);
 
 // Funciones dedicadas a la asignación de vehículos
 void assign_vehicles_to_deliveries(Delivery *, int, Vehicle *, int, SchedulingMode);
+void assign_nearest_neighbor(Delivery *deliveries, int n_deliveries, Vehicle *vehicles, int n_vehicles);
 
 // Funciones auxiliares
 float calculate_distance(float, float, float, float);
