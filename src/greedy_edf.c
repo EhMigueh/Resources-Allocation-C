@@ -5,11 +5,7 @@ void schedule_edf(Delivery *deliveries, int n_deliveries, Vehicle *vehicles, int
 {
     custom_qsort(deliveries, 0, n_deliveries - 1, EARLIEST_DEADLINE_FIRST);
     fprintf(stdout, "\n--- Estrategia: Earliest Deadline First (EDF) ---\n\n");
-    assign_edf(deliveries, n_deliveries, vehicles, n_vehicles);
-}
 
-void assign_edf(Delivery *deliveries, int n_deliveries, Vehicle *vehicles, int n_vehicles)
-{
     int completed_deliveries = 0;
     float total_wait_time = 0.0;
     float total_distance = 0.0;
