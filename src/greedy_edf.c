@@ -13,6 +13,8 @@ void assign_edf(Delivery *deliveries, int n_deliveries, Vehicle *vehicles, int n
     int completed_deliveries = 0;
     float total_wait_time = 0.0;
     float total_distance = 0.0;
+    float liters_used = 0.0;
+    float total_cost = 0.0;
 
     clock_t start_time = clock();
 
@@ -49,6 +51,9 @@ void assign_edf(Delivery *deliveries, int n_deliveries, Vehicle *vehicles, int n
         if (best_vehicle != -1)
         {
             int j = best_vehicle;
+            float this_delivery_liters = best_real_distance * calculate_gasoline_by_type(vehicles[j].type);
+            liters_used += this_delivery_liters;
+            total_cost += this_delivery_liters * PRICE_PER_LITER;
 
             int vehicle_arrival_time = time_to_minutes(vehicles[j].start);
             int delivery_start_time = time_to_minutes(deliveries[i].start);
@@ -82,6 +87,8 @@ void assign_edf(Delivery *deliveries, int n_deliveries, Vehicle *vehicles, int n
     fprintf(stdout, "Distancia total recorrida: %.2f km\n", total_distance);
     fprintf(stdout, "Tiempo total de espera: %.2f minutos\n", total_wait_time);
     fprintf(stdout, "Tiempo de ejecución del algoritmo: %.6f segundos\n", execution_time);
+    fprintf(stdout, "Litros totales usados: %.2f L\n", liters_used);
+    fprintf(stdout, "Costo total de bencina: $%.0f CLP\n", total_cost);
 }
 
 // Función de comparación para ordenar entregas por fecha límite

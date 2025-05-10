@@ -11,6 +11,8 @@ void assign_nearest_neighbor(Delivery *deliveries, int n_deliveries, Vehicle *ve
     int completed_deliveries = 0;
     float total_wait_time = 0.0f;
     float total_distance = 0.0f;
+    float liters_used = 0.0;
+    float total_cost = 0.0;
 
     clock_t start_time = clock();
 
@@ -37,7 +39,6 @@ void assign_nearest_neighbor(Delivery *deliveries, int n_deliveries, Vehicle *ve
                     deliveries[i].destination_x, deliveries[i].destination_y);
 
                 float real_distance = distance_to_origin + delivery_distance;
-
                 int vehicle_available_time = time_to_minutes(vehicles[j].start);
                 int delivery_start_time = time_to_minutes(deliveries[i].start);
                 float time_difference = (delivery_start_time - vehicle_available_time > 0) ? (delivery_start_time - vehicle_available_time) : 0;
@@ -63,6 +64,9 @@ void assign_nearest_neighbor(Delivery *deliveries, int n_deliveries, Vehicle *ve
         if (best_vehicle != -1)
         {
             int j = best_vehicle;
+            float this_delivery_liters = best_real_distance * calculate_gasoline_by_type(vehicles[j].type);
+            liters_used += this_delivery_liters;
+            total_cost += this_delivery_liters * PRICE_PER_LITER;
 
             int vehicle_arrival_time = time_to_minutes(vehicles[j].start);
             int delivery_start_time = time_to_minutes(deliveries[i].start);
@@ -96,6 +100,8 @@ void assign_nearest_neighbor(Delivery *deliveries, int n_deliveries, Vehicle *ve
     fprintf(stdout, "Distancia total recorrida: %.2f km\n", total_distance);
     fprintf(stdout, "Tiempo total de espera: %.2f minutos\n", total_wait_time);
     fprintf(stdout, "Tiempo de ejecución del algoritmo: %.6f segundos\n", execution_time);
+    fprintf(stdout, "Litros totales usados: %.2f L\n", liters_used);
+    fprintf(stdout, "Costo total de bencina: $%.0f CLP\n", total_cost);
 
     exportar_informe_csv("Informe_diario_de_entregas.csv", deliveries, n_deliveries, vehicles, n_vehicles);
 }

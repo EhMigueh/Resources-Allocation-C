@@ -10,6 +10,7 @@
 #define FLEXIBILITY_MINUTES 60
 #define MAX_NUM_DELIVERIES 15
 #define MAX_NUM_VEHICLES 15
+#define PRICE_PER_LITER 1350
 
 #define RESET_COLOR "\x1b[0m"
 #define RED_COLOR "\x1b[31m"
@@ -128,6 +129,9 @@ void error_invalid_option(void);
 
 // Funcion para exportar csv
 void exportar_informe_csv(const char *nombre_archivo, Delivery *deliveries, int n_deliveries, Vehicle *vehicles, int n_vehicles);
+
+// Funcion para consumo por tipo de vehiculo
+float calculate_gasoline_by_type(int type);
 
 // NI IDEA DE DÓNDE SALE ESTO...
 /*

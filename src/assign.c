@@ -12,6 +12,9 @@ void assign_vehicles_to_deliveries(Delivery *deliveries, int n_deliveries, Vehic
     int completed_deliveries = 0;
     float total_wait_time = 0.0;
     float total_distance = 0.0;
+    float liters_used = 0.0;
+    float total_cost = 0.0;
+    float distance = 0.0;
 
     clock_t start_time = clock();
 
@@ -29,7 +32,7 @@ void assign_vehicles_to_deliveries(Delivery *deliveries, int n_deliveries, Vehic
                 time_to_minutes(vehicles[j].start) <= time_to_minutes(deliveries[i].start) + FLEXIBILITY_MINUTES &&
                 time_to_minutes(vehicles[j].end) >= time_to_minutes(deliveries[i].end))
             {
-                float distance = calculate_distance(vehicles[j].pos_x, vehicles[j].pos_y, deliveries[i].origin_x, deliveries[i].origin_y);
+                distance = calculate_distance(vehicles[j].pos_x, vehicles[j].pos_y, deliveries[i].origin_x, deliveries[i].origin_y);
 
                 if (distance < min_distance)
                 {
@@ -42,6 +45,9 @@ void assign_vehicles_to_deliveries(Delivery *deliveries, int n_deliveries, Vehic
         if (best_vehicle != -1)
         {
             int j = best_vehicle;
+            float this_delivery_liters = distance * calculate_gasoline_by_type(vehicles[j].type);
+            liters_used += this_delivery_liters;
+            total_cost += this_delivery_liters * PRICE_PER_LITER;
 
             int vehicle_arrival_time = time_to_minutes(vehicles[j].start);
             int delivery_start_time = time_to_minutes(deliveries[i].start);
@@ -78,4 +84,6 @@ void assign_vehicles_to_deliveries(Delivery *deliveries, int n_deliveries, Vehic
     fprintf(stdout, "Distancia total recorrida: %.2f km\n", total_distance);
     fprintf(stdout, "Tiempo total de espera: %.2f minutos\n", total_wait_time);
     fprintf(stdout, "Tiempo de ejecución del algoritmo: %.6f segundos\n", execution_time);
+    fprintf(stdout, "Litros totales usados: %.2f L\n", liters_used);
+    fprintf(stdout, "Costo total de bencina: $%.0f CLP\n", total_cost);
 }

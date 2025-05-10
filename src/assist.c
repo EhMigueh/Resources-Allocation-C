@@ -125,3 +125,18 @@ void exportar_informe_csv(const char *nombre_archivo, Delivery *deliveries, int 
     fclose(file);
     printf("Informe exportado como archivo CSV: %s\n", nombre_archivo);
 }
+
+float calculate_gasoline_by_type(int type)
+{
+    switch (type)
+    {
+    case 1:
+        return 0.12;
+    case 2:
+        return 0.15;
+    case 3:
+        return 0.18;
+    default:
+        return 0.14;
+    }
+}
