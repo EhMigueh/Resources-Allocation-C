@@ -69,6 +69,7 @@ typedef enum
 
 // Funciones relacionadas con el manejo de los comandos
 void show_help();
+
 // Declaración de la función process_command
 void process_command(int argc, char *argv[], Delivery *deliveries, int *n_deliveries, Vehicle *vehicles, int *n_vehicles);
 
@@ -90,15 +91,12 @@ int compare_by_priority(const void *, const void *);
 
 // Funciones Nearest Neighbor
 void schedule_nearest_neighbor(Delivery *deliveries, int n_deliveries, Vehicle *vehicles, int n_vehicles);
+void assign_nearest_neighbor(Delivery *deliveries, int n_deliveries, Vehicle *vehicles, int n_vehicles);
 
 // Funciones de ordenamiento.
 void swap(Delivery *, Delivery *);
 int partition(Delivery *, int, int, SchedulingMode);
 void custom_qsort(Delivery *, int, int, SchedulingMode);
-
-// Funciones dedicadas a la asignación de vehículos
-void assign_vehicles_to_deliveries(Delivery *, int, Vehicle *, int, SchedulingMode);
-void assign_nearest_neighbor(Delivery *deliveries, int n_deliveries, Vehicle *vehicles, int n_vehicles);
 
 // Funciones auxiliares
 float calculate_distance(float, float, float, float);
@@ -112,7 +110,7 @@ float generate_random_float(float, float);
 void generate_random_deliveries_csv();
 void generate_random_vehicles_csv();
 void create_random_databases();
-void generate_custom_csv(int num_deliveries, int num_vehicles); 
+void generate_custom_csv(int num_deliveries, int num_vehicles);
 
 // Funciones de errores.
 void fatal_error(const char *, const char *, const char *);
