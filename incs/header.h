@@ -8,9 +8,8 @@
 #define MAX_ID_LENGTH 10
 #define MAX_LINE_LENGTH 256
 #define FLEXIBILITY_MINUTES 60
-#define MAX_NUM_DELIVERIES 15
-#define MAX_NUM_VEHICLES 15
 #define PRICE_PER_LITER 1350
+#define MAX_ENTRIES 999
 
 #define RESET_COLOR "\x1b[0m"
 #define RED_COLOR "\x1b[31m"
@@ -70,7 +69,8 @@ typedef enum
 
 // Funciones relacionadas con el manejo de los comandos
 void show_help();
-void process_command(int, char *argv[], Delivery *, int, Vehicle *, int);
+// Declaración de la función process_command
+void process_command(int argc, char *argv[], Delivery *deliveries, int *n_deliveries, Vehicle *vehicles, int *n_vehicles);
 
 // Funciones de carga de datos.
 int load_csv_data(const char *, void **, DataType);
@@ -112,6 +112,7 @@ float generate_random_float(float, float);
 void generate_random_deliveries_csv();
 void generate_random_vehicles_csv();
 void create_random_databases();
+void generate_custom_csv(int num_deliveries, int num_vehicles); 
 
 // Funciones de errores.
 void fatal_error(const char *, const char *, const char *);
