@@ -62,10 +62,14 @@ void schedule_pb(Delivery *deliveries, int n_deliveries, Vehicle *vehicles, int 
             vehicles[j].pos_x = deliveries[i].destination_x;
             vehicles[j].pos_y = deliveries[i].destination_y;
             strcpy(deliveries[i].vehicle_assigned, vehicles[j].id);
+
+            fprintf(stdout, "ID Entrega: %s - ID Vehiculo: %s - Litros usados: %.2f - Distancia recorrida: %.2f\n", deliveries[i].id, vehicles[j].id, this_delivery_liters, best_real_distance); // temporal
         }
         else
             continue;
     }
+
+    fprintf(stdout, "\nCOMPARAR CON LOS INFORMES...\n\n"); // temporal
 
     clock_t end_time = clock();
     double execution_time = (double)(end_time - start_time) / CLOCKS_PER_SEC;
