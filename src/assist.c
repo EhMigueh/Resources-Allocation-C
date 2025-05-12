@@ -66,7 +66,7 @@ void export_to_csv(const char *filename, Delivery *deliveries, int n_deliveries,
     FILE *file = fopen(filename, "w");
     error_open_file(file, filename);
 
-    fprintf(file, "ID Entrega,ID Vehículo,Litros de combustible usados,Distancia Recorrida (km)\n");
+    fprintf(file, "ID Entrega,ID Vehículo,Litros de Combustible Usados,Distancia Recorrida (KM)\n");
 
     for (int i = 0; i < n_deliveries; i++)
     {
@@ -107,10 +107,10 @@ float calculate_gasoline_by_type(int type)
 
 void show_metrics(float total_distance, float liters_used, float total_cost, int completed_deliveries, float total_wait_time, int n_deliveries, double execution_time)
 {
-    fprintf(stdout, "--- Métricas de la Simulación ---\n\n");
+    fprintf(stdout, "\n--- Métricas de la Simulación ---\n\n");
     fprintf(stdout, "Numero de entregas completadas: %d/%d\n", completed_deliveries, n_deliveries);
     fprintf(stdout, "Distancia total recorrida: %.2f km\n", total_distance);
-    fprintf(stdout, "Tiempo total de espera: %.2f min\n", total_wait_time);
+    fprintf(stdout, "Tiempo total de espera: %.2f hrs\n", total_wait_time);
     fprintf(stdout, "Tiempo de ejecucion del algoritmo: %.6f seg\n", execution_time);
     fprintf(stdout, "Litros totales de combustible usados: %.2f L\n", liters_used);
     fprintf(stdout, "Costo total del combustible: $%.0f CLP\n\n", total_cost);

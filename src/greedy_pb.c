@@ -81,7 +81,11 @@ void schedule_pb(Delivery *deliveries, int n_deliveries, Vehicle *vehicles, int 
         fprintf(stdout, "Capacidad restante del vehículo %s: Volumen=%.2f, Peso=%.2f\n\n", vehicles[i].id, vehicles[i].capacity_volume, vehicles[i].capacity_weight);
     }
 
-    show_metrics(total_distance, liters_used, total_cost, completed_deliveries, total_wait_time, n_deliveries, execution_time);
+    for (int i = 0; i < n_deliveries; i++)
+        if (deliveries[i].vehicle_assigned[0] == '\0')
+            fprintf(stdout, "La entrega %s no fue asignada a ningún vehículo.\n", deliveries[i].id);
+
+    show_metrics(total_distance, liters_used, total_cost, completed_deliveries, total_wait_time / 60, n_deliveries, execution_time);
 
     export_to_csv("./output/informe_entregas_pb.csv", deliveries, n_deliveries, vehicles, n_vehicles);
 }
