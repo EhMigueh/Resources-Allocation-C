@@ -9,7 +9,7 @@
 #define MAX_LINE_LENGTH 256
 #define FLEXIBILITY_MINUTES 60
 #define PRICE_PER_LITER 1350
-#define MAX_ENTRIES 999
+#define MAX_ENTRIES 10000
 
 #define RESET_COLOR "\x1b[0m"
 #define RED_COLOR "\x1b[31m"
@@ -32,7 +32,6 @@ typedef struct
     int vehicle_type;       // Tipo de vehículo (1-3)
     float volume;           // Volumen de la entrega
     float weight;           // Peso de la entrega
-
 } Delivery;
 
 // Estructura que representa un vehículo
@@ -122,7 +121,7 @@ void error_invalid_argc(int);
 void error_invalid_numbers(char *, char *, int, int);
 
 // Funcion para exportar csv
-void exportar_informe_csv(const char *nombre_archivo, Delivery *deliveries, int n_deliveries, Vehicle *vehicles, int n_vehicles);
+void export_to_csv(const char *, Delivery *, int, Vehicle *, int);
 
 // NI IDEA DE DÓNDE SALE ESTO...
 /*
