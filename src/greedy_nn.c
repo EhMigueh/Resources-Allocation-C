@@ -89,7 +89,7 @@ void schedule_nn(Delivery *deliveries, int n_deliveries, Vehicle *vehicles, int 
         fprintf(stdout, "Capacidad restante del vehículo %s: Volumen=%.2f, Peso=%.2f\n\n", vehicles[i].id, vehicles[i].capacity_volume, vehicles[i].capacity_weight);
     }
 
-    show_metrics(total_distance, total_wait_time, liters_used, completed_deliveries, total_cost, n_deliveries, execution_time);
+    show_metrics(total_distance, liters_used, total_cost, completed_deliveries, total_wait_time, n_deliveries, execution_time);
 
     export_to_csv("./output/informe_entregas_nn.csv", deliveries, n_deliveries, vehicles, n_vehicles);
 }
