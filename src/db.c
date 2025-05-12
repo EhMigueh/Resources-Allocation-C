@@ -1,6 +1,5 @@
 #include "header.h"
 
-
 void generate_random_time(char *buffer, int min_hour, int max_hour)
 {
     int hour = min_hour + rand() % (max_hour - min_hour + 1);
@@ -84,32 +83,12 @@ void generate_random_vehicles_csv(int num_vehicles)
     fclose(file);
 }
 
-void create_random_databases()
+void create_random_databases(int num_deliveries, int num_vehicles)
 {
     // Generar entregas y vehículos con valores predeterminados
-    generate_random_deliveries_csv(15);
-    generate_random_vehicles_csv(15);
-
-    // Mostrar mensaje de éxito
-    fprintf(stdout, GREEN_COLOR "Bases de datos generadas con exito.\n" RESET_COLOR);
-}
-
-// Nueva función para generar archivos CSV personalizados
-void generate_custom_csv(int num_deliveries, int num_vehicles)
-{
-    // Validar límites
-    if (num_deliveries > MAX_ENTRIES || num_vehicles > MAX_ENTRIES)
-    {
-        fprintf(stderr, RED_COLOR "Error: El número de entregas o vehiculos no puede exceder %d.\n" RESET_COLOR, MAX_ENTRIES);
-        exit(EXIT_FAILURE);
-    }
-
-    // Generar archivos CSV personalizados
     generate_random_deliveries_csv(num_deliveries);
     generate_random_vehicles_csv(num_vehicles);
 
-    // Mostrar mensaje con el número de entregas y vehículos generados
-    fprintf(stdout, GREEN_COLOR "Archivos CSV personalizados generados con exito.\n" RESET_COLOR);
-    fprintf(stdout, CYAN_COLOR "Se han cargado %d entregas y %d vehiculos.\n" RESET_COLOR, num_deliveries, num_vehicles);
-    fprintf(stdout, GREEN_COLOR "Archivos CSV generados con exito.\n" RESET_COLOR);
+    // Mostrar mensaje de éxito
+    fprintf(stdout, GREEN_COLOR "\nBases de datos generadas con exito.\n\n" RESET_COLOR);
 }

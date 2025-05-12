@@ -108,3 +108,15 @@ void error_invalid_option(void)
     show_help();
     fatal_error("Opción no válida", "Revise la opción --h o --help", "main.c");
 }
+
+void error_invalid_argc(int argc)
+{
+    if (argc < 4)
+        fatal_error("Debes especificar el número de entregas y vehículos", "Ejemplo: ./build/program.out --db 20 10 o ./build/program.out --database 20 10", "terminal");
+}
+
+void error_invalid_numbers(char *endptr1, char *endptr2, int num_deliveries, int num_vehicles)
+{
+    if (*endptr1 != '\0' || *endptr2 != '\0' || num_deliveries <= 0 || num_vehicles <= 0)
+        fatal_error("Los valores de entregas y vehículos deben ser números enteros positivos", "Ejemplo: ./build/program.out --db 20 10 o ./build/program.out --database 20 10", "terminal");
+}

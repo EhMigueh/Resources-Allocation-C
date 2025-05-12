@@ -1,13 +1,9 @@
 #include "header.h"
 
-void schedule_nearest_neighbor(Delivery *deliveries, int n_deliveries, Vehicle *vehicles, int n_vehicles)
+void schedule_nn(Delivery *deliveries, int n_deliveries, Vehicle *vehicles, int n_vehicles)
 {
     fprintf(stdout, "\n--- Estrategia: Nearest-Neighbor Scheduling ---\n\n");
-    assign_nearest_neighbor(deliveries, n_deliveries, vehicles, n_vehicles);
-}
 
-void assign_nearest_neighbor(Delivery *deliveries, int n_deliveries, Vehicle *vehicles, int n_vehicles)
-{
     int completed_deliveries = 0;
     float total_wait_time = 0.0f;
     float total_distance = 0.0f;
@@ -30,13 +26,9 @@ void assign_nearest_neighbor(Delivery *deliveries, int n_deliveries, Vehicle *ve
                 time_to_minutes(vehicles[j].start) <= time_to_minutes(deliveries[i].start) + FLEXIBILITY_MINUTES &&
                 time_to_minutes(vehicles[j].end) >= time_to_minutes(deliveries[i].end))
             {
-                float distance_to_origin = calculate_distance(
-                    vehicles[j].pos_x, vehicles[j].pos_y,
-                    deliveries[i].origin_x, deliveries[i].origin_y);
+                float distance_to_origin = calculate_distance(vehicles[j].pos_x, vehicles[j].pos_y, deliveries[i].origin_x, deliveries[i].origin_y);
 
-                float delivery_distance = calculate_distance(
-                    deliveries[i].origin_x, deliveries[i].origin_y,
-                    deliveries[i].destination_x, deliveries[i].destination_y);
+                float delivery_distance = calculate_distance(deliveries[i].origin_x, deliveries[i].origin_y, deliveries[i].destination_x, deliveries[i].destination_y);
 
                 float real_distance = distance_to_origin + delivery_distance;
                 int vehicle_available_time = time_to_minutes(vehicles[j].start);
@@ -47,10 +39,7 @@ void assign_nearest_neighbor(Delivery *deliveries, int n_deliveries, Vehicle *ve
                 float weight_util = 1.0f - (vehicles[j].capacity_weight / vehicles[j].original_weight);
                 float utilization_score = (volume_util + weight_util) / 2.0f;
 
-                float score = distance_to_origin +
-                              (0.5f * time_difference) +
-                              (5.0f * vehicles[j].deliveries_assigned) +
-                              (10.0f * utilization_score);
+                float score = distance_to_origin + (0.5f * time_difference) + (5.0f * vehicles[j].deliveries_assigned) + (10.0f * utilization_score);
 
                 if (score < min_score)
                 {
@@ -83,25 +72,16 @@ void assign_nearest_neighbor(Delivery *deliveries, int n_deliveries, Vehicle *ve
             vehicles[j].pos_y = deliveries[i].destination_y;
 
             fprintf(stdout, "Asignando entrega %s al vehículo %s\n", deliveries[i].id, vehicles[j].id);
-            fprintf(stdout, "Capacidad restante del vehículo %s: Volumen=%.2f, Peso=%.2f\n\n",
-                    vehicles[j].id, vehicles[j].capacity_volume, vehicles[j].capacity_weight);
+            fprintf(stdout, "Capacidad restante del vehículo %s: Volumen=%.2f, Peso=%.2f\n\n", vehicles[j].id, vehicles[j].capacity_volume, vehicles[j].capacity_weight);
         }
         else
-        {
             fprintf(stdout, "No se pudo asignar un vehículo para la entrega %s\n\n", deliveries[i].id);
-        }
     }
 
     clock_t end_time = clock();
     double execution_time = (double)(end_time - start_time) / CLOCKS_PER_SEC;
 
-    fprintf(stdout, "\n--- Métricas ---\n\n");
-    fprintf(stdout, "Número de entregas completadas: %d/%d\n", completed_deliveries, n_deliveries);
-    fprintf(stdout, "Distancia total recorrida: %.2f km\n", total_distance);
-    fprintf(stdout, "Tiempo total de espera: %.2f minutos\n", total_wait_time);
-    fprintf(stdout, "Tiempo de ejecución del algoritmo: %.6f segundos\n", execution_time);
-    fprintf(stdout, "Litros totales usados: %.2f L\n", liters_used);
-    fprintf(stdout, "Costo total de bencina: $%.0f CLP\n", total_cost);
+    show_metrics(total_distance, total_wait_time, liters_used, completed_deliveries, total_cost, n_deliveries, execution_time);
 
     exportar_informe_csv("Informe_diario_de_entregas.csv", deliveries, n_deliveries, vehicles, n_vehicles);
 }

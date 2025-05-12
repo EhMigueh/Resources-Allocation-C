@@ -69,9 +69,7 @@ typedef enum
 
 // Funciones relacionadas con el manejo de los comandos
 void show_help();
-
-// Declaración de la función process_command
-void process_command(int argc, char *argv[], Delivery *deliveries, int *n_deliveries, Vehicle *vehicles, int *n_vehicles);
+void process_command(int, char *argv[], Delivery *, int *, Vehicle *, int *);
 
 // Funciones de carga de datos.
 int load_csv_data(const char *, void **, DataType);
@@ -82,16 +80,12 @@ void validate_vehicle_data(Vehicle *, int);
 
 // Funciones Earliest Deadline First
 void schedule_edf(Delivery *, int, Vehicle *, int);
-int compare_deadlines(const void *, const void *);
-void assign_edf(Delivery *, int, Vehicle *, int);
 
 // Funciones Priority-Based
-void schedule_based_priority(Delivery *, int, Vehicle *, int);
-int compare_by_priority(const void *, const void *);
+void schedule_pb(Delivery *, int, Vehicle *, int);
 
 // Funciones Nearest Neighbor
-void schedule_nearest_neighbor(Delivery *deliveries, int n_deliveries, Vehicle *vehicles, int n_vehicles);
-void assign_nearest_neighbor(Delivery *deliveries, int n_deliveries, Vehicle *vehicles, int n_vehicles);
+void schedule_nn(Delivery *deliveries, int n_deliveries, Vehicle *vehicles, int n_vehicles);
 
 // Funciones de ordenamiento.
 void swap(Delivery *, Delivery *);
@@ -101,8 +95,8 @@ void custom_qsort(Delivery *, int, int, SchedulingMode);
 // Funciones auxiliares
 float calculate_distance(float, float, float, float);
 int time_to_minutes(const char *);
-void calculate_total_distance(Vehicle *, int, Delivery *, int);
-void calculate_vehicle_utilization(Vehicle *, int);
+float calculate_gasoline_by_type(int);
+void show_metrics(float, float, float, int, float, int, double);
 
 // Funciones dedicadas a la creación de CSV
 void generate_random_time(char *, int, int);
@@ -110,7 +104,6 @@ float generate_random_float(float, float);
 void generate_random_deliveries_csv();
 void generate_random_vehicles_csv();
 void create_random_databases();
-void generate_custom_csv(int num_deliveries, int num_vehicles);
 
 // Funciones de errores.
 void fatal_error(const char *, const char *, const char *);
@@ -125,12 +118,11 @@ void error_vehicle_capacity(void);
 void error_vehicle_type(void);
 void error_no_arguments(void);
 void error_invalid_option(void);
+void error_invalid_argc(int);
+void error_invalid_numbers(char *, char *, int, int);
 
 // Funcion para exportar csv
 void exportar_informe_csv(const char *nombre_archivo, Delivery *deliveries, int n_deliveries, Vehicle *vehicles, int n_vehicles);
-
-// Funcion para consumo por tipo de vehiculo
-float calculate_gasoline_by_type(int type);
 
 // NI IDEA DE DÓNDE SALE ESTO...
 /*
@@ -138,4 +130,16 @@ void export_assignments_to_csv(const char *, Delivery *, int, Vehicle *, int);
 void export_metrics_to_csv(const char *, int, int, float, float, double);
 
 void simulate_delays(Delivery *, int, int);
+
+void assign_edf(Delivery *, int, Vehicle *, int);
+
+int compare_by_priority(const void *, const void *);
+
+int compare_deadlines(const void *, const void *);
+
+void assign_nearest_neighbor(Delivery *deliveries, int n_deliveries, Vehicle *vehicles, int n_vehicles);
+
+void calculate_total_distance(Vehicle *, int, Delivery *, int);
+
+void calculate_vehicle_utilization(Vehicle *, int);
 */

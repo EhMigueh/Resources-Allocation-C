@@ -71,30 +71,12 @@ void schedule_edf(Delivery *deliveries, int n_deliveries, Vehicle *vehicles, int
         }
         else
         {
-            fprintf(stdout, "No se pudo asignar un vehículo para la entrega %s\n\n", deliveries[i].id);
+            fprintf(stdout, "No se pudo asignar un vehiculo para la entrega %s\n\n", deliveries[i].id);
         }
     }
 
     clock_t end_time = clock();
     double execution_time = (double)(end_time - start_time) / CLOCKS_PER_SEC;
 
-    fprintf(stdout, "\n--- Métricas ---\n\n");
-    fprintf(stdout, "Número de entregas completadas: %d/%d\n", completed_deliveries, n_deliveries);
-    fprintf(stdout, "Distancia total recorrida: %.2f km\n", total_distance);
-    fprintf(stdout, "Tiempo total de espera: %.2f minutos\n", total_wait_time);
-    fprintf(stdout, "Tiempo de ejecución del algoritmo: %.6f segundos\n", execution_time);
-    fprintf(stdout, "Litros totales usados: %.2f L\n", liters_used);
-    fprintf(stdout, "Costo total de bencina: $%.0f CLP\n", total_cost);
-}
-
-// Función de comparación para ordenar entregas por fecha límite
-int compare_deadlines(const void *a, const void *b)
-{
-    Delivery *d1 = (Delivery *)a;
-    Delivery *d2 = (Delivery *)b;
-
-    int t1 = time_to_minutes(d1->end);
-    int t2 = time_to_minutes(d2->end);
-
-    return t1 - t2; // orden ascendente
+    show_metrics(liters_used, total_cost, total_distance, completed_deliveries, total_wait_time, n_deliveries, execution_time);
 }

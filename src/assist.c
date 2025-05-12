@@ -14,7 +14,7 @@ int time_to_minutes(const char *time_str)
     return hours * 60 + minutes;
 }
 
-// Calcular la distancia total recorrida por los vehículos
+/*
 void calculate_total_distance(Vehicle *vehicles, int n_vehicles, Delivery *deliveries, int n_deliveries)
 {
     float total_distance = 0.0;
@@ -30,7 +30,9 @@ void calculate_total_distance(Vehicle *vehicles, int n_vehicles, Delivery *deliv
 
     fprintf(stdout, "Distancia total recorrida por los vehículos: %.2f km\n", total_distance);
 }
+*/
 
+/*
 // Calcular la utilización de los vehículos
 void calculate_vehicle_utilization(Vehicle *vehicles, int n_vehicles)
 {
@@ -56,6 +58,7 @@ void calculate_vehicle_utilization(Vehicle *vehicles, int n_vehicles)
             fprintf(stdout, "  Utilización de peso: 0.00%%\n\n");
     }
 }
+*/
 
 // Funcion para exportar csv
 void exportar_informe_csv(const char *nombre_archivo, Delivery *deliveries, int n_deliveries, Vehicle *vehicles, int n_vehicles)
@@ -139,4 +142,15 @@ float calculate_gasoline_by_type(int type)
     default:
         return 0.14;
     }
+}
+
+void show_metrics(float total_distance, float liters_used, float total_cost, int completed_deliveries, float total_wait_time, int n_deliveries, double execution_time)
+{
+    fprintf(stdout, "\n--- Métricas de la Simulación ---\n\n");
+    fprintf(stdout, "Numero de entregas completadas: %d/%d\n", completed_deliveries, n_deliveries);
+    fprintf(stdout, "Distancia total recorrida: %.2f km\n", total_distance);
+    fprintf(stdout, "Tiempo total de espera: %.2f min\n", total_wait_time);
+    fprintf(stdout, "Tiempo de ejecucion del algoritmo: %.6f seg\n", execution_time);
+    fprintf(stdout, "Litros totales de combustible usados: %.2f L\n", liters_used);
+    fprintf(stdout, "Costo total del combustible: $%.0f CLP\n\n", total_cost);
 }
