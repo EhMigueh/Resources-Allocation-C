@@ -66,32 +66,37 @@ void export_to_csv(const char *nombre_archivo, Delivery *deliveries, int n_deliv
     FILE *file = fopen(nombre_archivo, "w");
     error_open_file(file, nombre_archivo);
 
-    fprintf(file, "ID Entrega,ID Vehículo,Volumen,Peso,Distancia Real (km),Tiempo de Espera (min),Entregas Asignadas,Capacidad Volumen Restante,Capacidad Peso Restante\n");
+    fprintf(file, "ID Entrega,ID Vehículo,Litros de combustible usados,Distancia Recorrida (km)\n");
 
     for (int i = 0; i < n_deliveries; i++)
     {
         int best_vehicle = -1;
+        float distancia_origen = 0.0f;
+        float distancia_entrega = 0.0f;
+        float distancia_real = 0.0f;
+        float litros_usados = 0.0f;
+
         for (int j = 0; j < n_vehicles; j++)
+        {
             if (vehicles[j].pos_x == deliveries[i].destination_x && vehicles[j].pos_y == deliveries[i].destination_y)
             {
                 best_vehicle = j;
+
+                distancia_origen = calculate_distance(vehicles[j].pos_x, vehicles[j].pos_y, deliveries[i].origin_x, deliveries[i].origin_y);
+                distancia_entrega = calculate_distance(deliveries[i].origin_x, deliveries[i].origin_y, deliveries[i].destination_x, deliveries[i].destination_y);
+                distancia_real = distancia_origen + distancia_entrega;
+
+                litros_usados = distancia_real * calculate_gasoline_by_type(vehicles[j].type);
+
+                fprintf(file, "%s,%s,%.2f,%.2f\n",
+                        deliveries[i].id, vehicles[j].id, litros_usados, distancia_real);
                 break;
             }
+        }
 
-        if (best_vehicle != -1)
+        if (best_vehicle == -1)
         {
-            float distancia_origen = calculate_distance(vehicles[best_vehicle].pos_x, vehicles[best_vehicle].pos_y, deliveries[i].origin_x, deliveries[i].origin_y);
-            float distancia_entrega = calculate_distance(deliveries[i].origin_x, deliveries[i].origin_y, deliveries[i].destination_x, deliveries[i].destination_y);
-            float distancia_real = distancia_origen + distancia_entrega;
-
-            int tiempo_vehiculo = time_to_minutes(vehicles[best_vehicle].start);
-            int tiempo_inicio = time_to_minutes(deliveries[i].start);
-            float tiempo_espera = (tiempo_inicio > tiempo_vehiculo) ? tiempo_inicio - tiempo_vehiculo : 0;
-
-            fprintf(file, "%s,%s,%.2f,%.2f,%.2f,%.2f,%d,%.2f,%.2f\n",
-                    deliveries[i].id, vehicles[best_vehicle].id, deliveries[i].volume,
-                    deliveries[i].weight, distancia_real, tiempo_espera, vehicles[best_vehicle].deliveries_assigned,
-                    vehicles[best_vehicle].capacity_volume, vehicles[best_vehicle].capacity_weight);
+            fprintf(file, "%s,NO ASIGNADO,0.00,0.00\n", deliveries[i].id);
         }
     }
 

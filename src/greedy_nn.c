@@ -70,16 +70,24 @@ void schedule_nn(Delivery *deliveries, int n_deliveries, Vehicle *vehicles, int 
             vehicles[j].capacity_weight -= deliveries[i].weight;
             vehicles[j].pos_x = deliveries[i].destination_x;
             vehicles[j].pos_y = deliveries[i].destination_y;
-
-            fprintf(stdout, "Asignando entrega %s al vehículo %s\n", deliveries[i].id, vehicles[j].id);
-            fprintf(stdout, "Capacidad restante del vehículo %s: Volumen=%.2f, Peso=%.2f\n\n", vehicles[j].id, vehicles[j].capacity_volume, vehicles[j].capacity_weight);
         }
         else
-            fprintf(stdout, "No se pudo asignar un vehículo para la entrega %s\n\n", deliveries[i].id);
+            continue;
     }
 
     clock_t end_time = clock();
     double execution_time = (double)(end_time - start_time) / CLOCKS_PER_SEC;
+
+    for (int i = 0; i < n_vehicles; i++)
+    {
+        if (vehicles[i].deliveries_assigned == 0)
+        {
+            fprintf(stdout, "El vehículo %s no realizó entregas.\n\n", vehicles[i].id);
+            continue;
+        }
+        fprintf(stdout, "Vehículo %s: Entregas Asignadas: %d\n", vehicles[i].id, vehicles[i].deliveries_assigned);
+        fprintf(stdout, "Capacidad restante del vehículo %s: Volumen=%.2f, Peso=%.2f\n\n", vehicles[i].id, vehicles[i].capacity_volume, vehicles[i].capacity_weight);
+    }
 
     show_metrics(total_distance, total_wait_time, liters_used, completed_deliveries, total_cost, n_deliveries, execution_time);
 
