@@ -72,18 +72,16 @@ void export_to_csv(const char *filename, Delivery *deliveries, int n_deliveries,
     {
         if (deliveries[i].vehicle_assigned[0] != '\0')
         {
-            for (int j = 0; j < n_vehicles; j++)
-            {
-                float delivery_distance = calculate_distance(deliveries[i].origin_x, deliveries[i].origin_y, deliveries[i].destination_x, deliveries[i].destination_y);
-                float origin_distance = calculate_distance(vehicles[j].pos_x, vehicles[j].pos_y, deliveries[i].origin_x, deliveries[i].origin_y);
-                float real_distance = origin_distance + delivery_distance;
-                float liters_used = real_distance * calculate_gasoline_by_type(vehicles[j].type);
-                fprintf(file, "%s,%s,%.2f,%.2f\n", deliveries[i].id, deliveries[i].vehicle_assigned, liters_used, real_distance);
-                break;
-            }
+            fprintf(file, "%s,%s,%.2f,%.2f\n",
+                    deliveries[i].id,
+                    deliveries[i].vehicle_assigned,
+                    deliveries[i].liters_used,
+                    deliveries[i].real_distance);
         }
         else
+        {
             fprintf(file, "%s,N/A,N/A,N/A\n", deliveries[i].id);
+        }
     }
 
     fclose(file);

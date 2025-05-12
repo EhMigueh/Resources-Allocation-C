@@ -33,6 +33,8 @@ typedef struct
     float volume;             // Volumen de la entrega
     float weight;             // Peso de la entrega
     char vehicle_assigned[5]; // ID del vehículo asignado
+    float real_distance;
+    float liters_used;
 } Delivery;
 
 // Estructura que representa un vehículo

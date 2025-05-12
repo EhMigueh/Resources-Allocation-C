@@ -61,6 +61,8 @@ void schedule_pb(Delivery *deliveries, int n_deliveries, Vehicle *vehicles, int 
             vehicles[j].capacity_weight -= deliveries[i].weight;
             vehicles[j].pos_x = deliveries[i].destination_x;
             vehicles[j].pos_y = deliveries[i].destination_y;
+            deliveries[i].real_distance = best_real_distance;
+            deliveries[i].liters_used = this_delivery_liters;
             strcpy(deliveries[i].vehicle_assigned, vehicles[j].id);
 
             fprintf(stdout, "ID Entrega: %s - ID Vehiculo: %s - Litros usados: %.2f - Distancia recorrida: %.2f\n", deliveries[i].id, vehicles[j].id, this_delivery_liters, best_real_distance); // temporal

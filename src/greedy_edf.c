@@ -64,6 +64,8 @@ void schedule_edf(Delivery *deliveries, int n_deliveries, Vehicle *vehicles, int
             vehicles[j].capacity_weight -= deliveries[i].weight;
             vehicles[j].pos_x = deliveries[i].destination_x;
             vehicles[j].pos_y = deliveries[i].destination_y;
+            deliveries[i].real_distance = best_real_distance;
+            deliveries[i].liters_used = this_delivery_liters;
             strcpy(deliveries[i].vehicle_assigned, vehicles[j].id);
         }
         else
