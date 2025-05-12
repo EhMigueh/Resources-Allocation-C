@@ -33,8 +33,8 @@ typedef struct
     float volume;             // Volumen de la entrega
     float weight;             // Peso de la entrega
     char vehicle_assigned[5]; // ID del vehículo asignado
-    float real_distance;
-    float liters_used;
+    float distance;           // Distancia recorrida
+    float liters_used;        // Litros de combustible usados
 } Delivery;
 
 // Estructura que representa un vehículo
@@ -124,7 +124,7 @@ void error_invalid_argc(int);
 void error_invalid_numbers(char *, char *, int, int);
 
 // Funcion para exportar csv
-void export_to_csv(const char *, Delivery *, int, Vehicle *, int);
+void export_to_csv(const char *, Delivery *, int, int);
 
 // NI IDEA DE DÓNDE SALE ESTO...
 /*

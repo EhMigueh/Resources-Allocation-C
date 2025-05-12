@@ -61,7 +61,7 @@ void schedule_pb(Delivery *deliveries, int n_deliveries, Vehicle *vehicles, int 
             vehicles[j].capacity_weight -= deliveries[i].weight;
             vehicles[j].pos_x = deliveries[i].destination_x;
             vehicles[j].pos_y = deliveries[i].destination_y;
-            deliveries[i].real_distance = best_real_distance;
+            deliveries[i].distance = best_real_distance;
             deliveries[i].liters_used = this_delivery_liters;
             strcpy(deliveries[i].vehicle_assigned, vehicles[j].id);
 
@@ -93,5 +93,5 @@ void schedule_pb(Delivery *deliveries, int n_deliveries, Vehicle *vehicles, int 
 
     show_metrics(total_distance, liters_used, total_cost, completed_deliveries, total_wait_time / 60, n_deliveries, execution_time);
 
-    export_to_csv("./output/informe_entregas_pb.csv", deliveries, n_deliveries, vehicles, n_vehicles);
+    export_to_csv("./output/informe_entregas_pb.csv", deliveries, n_deliveries, n_vehicles);
 }

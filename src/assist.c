@@ -14,54 +14,8 @@ int time_to_minutes(const char *time_str)
     return hours * 60 + minutes;
 }
 
-/*
-void calculate_total_distance(Vehicle *vehicles, int n_vehicles, Delivery *deliveries, int n_deliveries)
-{
-    float total_distance = 0.0;
-
-    for (int i = 0; i < n_deliveries; i++)
-        for (int j = 0; j < n_vehicles; j++)
-            if (vehicles[j].type >= deliveries[i].vehicle_type && vehicles[j].capacity_volume >= deliveries[i].volume && vehicles[j].capacity_weight >= deliveries[i].weight)
-            {
-                float distance = sqrt(pow(deliveries[i].origin_x - vehicles[j].pos_x, 2) + pow(deliveries[i].origin_y - vehicles[j].pos_y, 2));
-                total_distance += distance;
-                break;
-            }
-
-    fprintf(stdout, "Distancia total recorrida por los vehículos: %.2f km\n", total_distance);
-}
-*/
-
-/*
-// Calcular la utilización de los vehículos
-void calculate_vehicle_utilization(Vehicle *vehicles, int n_vehicles)
-{
-    fprintf(stdout, "\n\n--- Utilización de los vehículos ---\n\n");
-
-    for (int j = 0; j < n_vehicles; j++)
-    {
-        float used_volume = vehicles[j].original_volume - vehicles[j].capacity_volume;
-        float used_weight = vehicles[j].original_weight - vehicles[j].capacity_weight;
-
-        // Mensajes de depuración
-        fprintf(stdout, "Vehículo %s: Volumen original=%.2f, Volumen usado=%.2f\n", vehicles[j].id, vehicles[j].original_volume, used_volume);
-        fprintf(stdout, "Vehículo %s: Peso original=%.2f, Peso usado=%.2f\n", vehicles[j].id, vehicles[j].original_weight, used_weight);
-
-        if (vehicles[j].original_volume > 0)
-            fprintf(stdout, "  Utilización de volumen: %.2f%%\n", (used_volume / vehicles[j].original_volume) * 100);
-        else
-            fprintf(stdout, "  Utilización de volumen: 0.00%%\n");
-
-        if (vehicles[j].original_weight > 0)
-            fprintf(stdout, "  Utilización de peso: %.2f%%\n\n", (used_weight / vehicles[j].original_weight) * 100);
-        else
-            fprintf(stdout, "  Utilización de peso: 0.00%%\n\n");
-    }
-}
-*/
-
 // Funcion para exportar csv
-void export_to_csv(const char *filename, Delivery *deliveries, int n_deliveries, Vehicle *vehicles, int n_vehicles)
+void export_to_csv(const char *filename, Delivery *deliveries, int n_deliveries, int n_vehicles)
 {
     FILE *file = fopen(filename, "w");
     error_open_file(file, filename);
@@ -76,7 +30,7 @@ void export_to_csv(const char *filename, Delivery *deliveries, int n_deliveries,
                     deliveries[i].id,
                     deliveries[i].vehicle_assigned,
                     deliveries[i].liters_used,
-                    deliveries[i].real_distance);
+                    deliveries[i].distance);
         }
         else
         {
