@@ -62,9 +62,9 @@ void schedule_edf(Delivery *deliveries, int n_deliveries, Vehicle *vehicles, int
             vehicles[j].deliveries_assigned++;
             vehicles[j].capacity_volume -= deliveries[i].volume;
             vehicles[j].capacity_weight -= deliveries[i].weight;
-
             vehicles[j].pos_x = deliveries[i].destination_x;
             vehicles[j].pos_y = deliveries[i].destination_y;
+            strcpy(deliveries[i].vehicle_assigned, vehicles[j].id);
         }
         else
             continue;

@@ -20,18 +20,19 @@
 // Estructura que representa una entrega
 typedef struct
 {
-    char id[MAX_ID_LENGTH]; // ID de la entrega
-    float origin_x;         // Coordenadas de origen X
-    float origin_y;         // Coordenadas de origen Y
-    float destination_x;    // Coordenadas de destino X
-    float destination_y;    // Coordenadas de destino Y
-    char start[6];          // Hora de inicio en formato HH:MM
-    char end[6];            // Hora de fin en formato HH:MM
-    int duration;           // Duración de la entrega en minutos
-    int priority;           // Prioridad de la entrega (1-5)
-    int vehicle_type;       // Tipo de vehículo (1-3)
-    float volume;           // Volumen de la entrega
-    float weight;           // Peso de la entrega
+    char id[MAX_ID_LENGTH];   // ID de la entrega
+    float origin_x;           // Coordenadas de origen X
+    float origin_y;           // Coordenadas de origen Y
+    float destination_x;      // Coordenadas de destino X
+    float destination_y;      // Coordenadas de destino Y
+    char start[6];            // Hora de inicio en formato HH:MM
+    char end[6];              // Hora de fin en formato HH:MM
+    int duration;             // Duración de la entrega en minutos
+    int priority;             // Prioridad de la entrega (1-5)
+    int vehicle_type;         // Tipo de vehículo (1-3)
+    float volume;             // Volumen de la entrega
+    float weight;             // Peso de la entrega
+    char vehicle_assigned[5]; // ID del vehículo asignado
 } Delivery;
 
 // Estructura que representa un vehículo

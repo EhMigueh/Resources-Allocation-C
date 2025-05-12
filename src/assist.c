@@ -61,47 +61,33 @@ void calculate_vehicle_utilization(Vehicle *vehicles, int n_vehicles)
 */
 
 // Funcion para exportar csv
-void export_to_csv(const char *nombre_archivo, Delivery *deliveries, int n_deliveries, Vehicle *vehicles, int n_vehicles)
+void export_to_csv(const char *filename, Delivery *deliveries, int n_deliveries, Vehicle *vehicles, int n_vehicles)
 {
-    FILE *file = fopen(nombre_archivo, "w");
-    error_open_file(file, nombre_archivo);
+    FILE *file = fopen(filename, "w");
+    error_open_file(file, filename);
 
     fprintf(file, "ID Entrega,ID Vehículo,Litros de combustible usados,Distancia Recorrida (km)\n");
 
     for (int i = 0; i < n_deliveries; i++)
     {
-        int best_vehicle = -1;
-        float distancia_origen = 0.0f;
-        float distancia_entrega = 0.0f;
-        float distancia_real = 0.0f;
-        float litros_usados = 0.0f;
-
-        for (int j = 0; j < n_vehicles; j++)
+        if (deliveries[i].vehicle_assigned[0] != '\0')
         {
-            if (vehicles[j].pos_x == deliveries[i].destination_x && vehicles[j].pos_y == deliveries[i].destination_y)
+            for (int j = 0; j < n_vehicles; j++)
             {
-                best_vehicle = j;
-
-                distancia_origen = calculate_distance(vehicles[j].pos_x, vehicles[j].pos_y, deliveries[i].origin_x, deliveries[i].origin_y);
-                distancia_entrega = calculate_distance(deliveries[i].origin_x, deliveries[i].origin_y, deliveries[i].destination_x, deliveries[i].destination_y);
-                distancia_real = distancia_origen + distancia_entrega;
-
-                litros_usados = distancia_real * calculate_gasoline_by_type(vehicles[j].type);
-
-                fprintf(file, "%s,%s,%.2f,%.2f\n",
-                        deliveries[i].id, vehicles[j].id, litros_usados, distancia_real);
+                float delivery_distance = calculate_distance(deliveries[i].origin_x, deliveries[i].origin_y, deliveries[i].destination_x, deliveries[i].destination_y);
+                float origin_distance = calculate_distance(vehicles[j].pos_x, vehicles[j].pos_y, deliveries[i].origin_x, deliveries[i].origin_y);
+                float real_distance = origin_distance + delivery_distance;
+                float liters_used = real_distance * calculate_gasoline_by_type(vehicles[j].type);
+                fprintf(file, "%s,%s,%.2f,%.2f\n", deliveries[i].id, deliveries[i].vehicle_assigned, liters_used, real_distance);
                 break;
             }
         }
-
-        if (best_vehicle == -1)
-        {
-            fprintf(file, "%s,NO ASIGNADO,0.00,0.00\n", deliveries[i].id);
-        }
+        else
+            fprintf(file, "%s,N/A,N/A,N/A\n", deliveries[i].id);
     }
 
     fclose(file);
-    printf("Informe exportado como archivo CSV: %s\n\n", nombre_archivo);
+    printf("Informe exportado como archivo CSV: %s\n\n", filename);
 }
 
 float calculate_gasoline_by_type(int type)
@@ -121,7 +107,7 @@ float calculate_gasoline_by_type(int type)
 
 void show_metrics(float total_distance, float liters_used, float total_cost, int completed_deliveries, float total_wait_time, int n_deliveries, double execution_time)
 {
-    fprintf(stdout, "\n--- Métricas de la Simulación ---\n\n");
+    fprintf(stdout, "--- Métricas de la Simulación ---\n\n");
     fprintf(stdout, "Numero de entregas completadas: %d/%d\n", completed_deliveries, n_deliveries);
     fprintf(stdout, "Distancia total recorrida: %.2f km\n", total_distance);
     fprintf(stdout, "Tiempo total de espera: %.2f min\n", total_wait_time);
