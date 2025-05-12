@@ -1,0 +1,6 @@
+ID Entrega,ID Vehículo,Volumen,Peso,Distancia Real (km),Tiempo de Espera (min),Entregas Asignadas,Capacidad Volumen Restante,Capacidad Peso Restante
+D002,V005,1.47,11.01,36.52,15.00,1,5.94,34.94
+D006,V004,1.85,16.08,31.01,0.00,1,8.18,12.88
+D007,V001,3.06,19.35,25.04,75.00,3,1.33,18.57
+D009,V002,1.83,13.35,33.94,90.00,2,0.40,31.31
+D015,V003,2.89,5.53,27.64,90.00,2,1.83,21.28

@@ -61,14 +61,10 @@ void calculate_vehicle_utilization(Vehicle *vehicles, int n_vehicles)
 */
 
 // Funcion para exportar csv
-void exportar_informe_csv(const char *nombre_archivo, Delivery *deliveries, int n_deliveries, Vehicle *vehicles, int n_vehicles)
+void export_to_csv(const char *nombre_archivo, Delivery *deliveries, int n_deliveries, Vehicle *vehicles, int n_vehicles)
 {
     FILE *file = fopen(nombre_archivo, "w");
-    if (!file)
-    {
-        fprintf(stderr, "Error al crear el archivo %s\n", nombre_archivo);
-        return;
-    }
+    error_open_file(file, nombre_archivo);
 
     fprintf(file, "ID Entrega,ID Vehículo,Volumen,Peso,Distancia Real (km),Tiempo de Espera (min),Entregas Asignadas,Capacidad Volumen Restante,Capacidad Peso Restante\n");
 
@@ -76,23 +72,16 @@ void exportar_informe_csv(const char *nombre_archivo, Delivery *deliveries, int 
     {
         int best_vehicle = -1;
         for (int j = 0; j < n_vehicles; j++)
-        {
-            if (vehicles[j].pos_x == deliveries[i].destination_x &&
-                vehicles[j].pos_y == deliveries[i].destination_y)
+            if (vehicles[j].pos_x == deliveries[i].destination_x && vehicles[j].pos_y == deliveries[i].destination_y)
             {
                 best_vehicle = j;
                 break;
             }
-        }
 
         if (best_vehicle != -1)
         {
-            float distancia_origen = calculate_distance(
-                vehicles[best_vehicle].pos_x, vehicles[best_vehicle].pos_y,
-                deliveries[i].origin_x, deliveries[i].origin_y);
-            float distancia_entrega = calculate_distance(
-                deliveries[i].origin_x, deliveries[i].origin_y,
-                deliveries[i].destination_x, deliveries[i].destination_y);
+            float distancia_origen = calculate_distance(vehicles[best_vehicle].pos_x, vehicles[best_vehicle].pos_y, deliveries[i].origin_x, deliveries[i].origin_y);
+            float distancia_entrega = calculate_distance(deliveries[i].origin_x, deliveries[i].origin_y, deliveries[i].destination_x, deliveries[i].destination_y);
             float distancia_real = distancia_origen + distancia_entrega;
 
             int tiempo_vehiculo = time_to_minutes(vehicles[best_vehicle].start);
@@ -100,33 +89,14 @@ void exportar_informe_csv(const char *nombre_archivo, Delivery *deliveries, int 
             float tiempo_espera = (tiempo_inicio > tiempo_vehiculo) ? tiempo_inicio - tiempo_vehiculo : 0;
 
             fprintf(file, "%s,%s,%.2f,%.2f,%.2f,%.2f,%d,%.2f,%.2f\n",
-                    deliveries[i].id,
-                    vehicles[best_vehicle].id,
-                    deliveries[i].volume,
-                    deliveries[i].weight,
-                    distancia_real,
-                    tiempo_espera,
-                    vehicles[best_vehicle].deliveries_assigned,
-                    vehicles[best_vehicle].capacity_volume,
-                    vehicles[best_vehicle].capacity_weight);
+                    deliveries[i].id, vehicles[best_vehicle].id, deliveries[i].volume,
+                    deliveries[i].weight, distancia_real, tiempo_espera, vehicles[best_vehicle].deliveries_assigned,
+                    vehicles[best_vehicle].capacity_volume, vehicles[best_vehicle].capacity_weight);
         }
     }
 
-    time_t t = time(NULL);
-    struct tm tm = *localtime(&t);
-    char fecha[20];
-    strftime(fecha, sizeof(fecha), "%Y-%m-%d", &tm);
-
-    fprintf(file, "INFORME DE OPERACIONES LOGÍSTICAS\n");
-    fprintf(file, "----------------------------------\n");
-    fprintf(file, "Empresa: Entregas Don Pepito\n");
-    fprintf(file, "RUT: 11.111.111-7\n");
-    fprintf(file, "Fecha del informe: %s\n", fecha);
-    fprintf(file, "\n");
-    fprintf(file, "----------------------------------\n");
-
     fclose(file);
-    printf("Informe exportado como archivo CSV: %s\n", nombre_archivo);
+    printf("Informe exportado como archivo CSV: %s\n\n", nombre_archivo);
 }
 
 float calculate_gasoline_by_type(int type)

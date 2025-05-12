@@ -83,5 +83,5 @@ void schedule_nn(Delivery *deliveries, int n_deliveries, Vehicle *vehicles, int 
 
     show_metrics(total_distance, total_wait_time, liters_used, completed_deliveries, total_cost, n_deliveries, execution_time);
 
-    exportar_informe_csv("Informe_diario_de_entregas.csv", deliveries, n_deliveries, vehicles, n_vehicles);
+    export_to_csv("./output/informe_entregas_nn.csv", deliveries, n_deliveries, vehicles, n_vehicles);
 }

@@ -79,4 +79,6 @@ void schedule_edf(Delivery *deliveries, int n_deliveries, Vehicle *vehicles, int
     double execution_time = (double)(end_time - start_time) / CLOCKS_PER_SEC;
 
     show_metrics(liters_used, total_cost, total_distance, completed_deliveries, total_wait_time, n_deliveries, execution_time);
+
+    export_to_csv("informe_edf.csv", deliveries, n_deliveries, vehicles, n_vehicles);
 }

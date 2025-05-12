@@ -75,4 +75,6 @@ void schedule_pb(Delivery *deliveries, int n_deliveries, Vehicle *vehicles, int 
     double execution_time = (double)(end_time - start_time) / CLOCKS_PER_SEC;
 
     show_metrics(total_distance, liters_used, total_cost, completed_deliveries, total_wait_time, n_deliveries, execution_time);
+
+    export_to_csv("output/priority_based_schedule.csv", deliveries, n_deliveries, vehicles, n_vehicles);
 }
