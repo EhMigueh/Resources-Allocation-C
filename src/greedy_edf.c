@@ -75,20 +75,9 @@ void schedule_edf(Delivery *deliveries, int n_deliveries, Vehicle *vehicles, int
     clock_t end_time = clock();
     double execution_time = (double)(end_time - start_time) / CLOCKS_PER_SEC;
 
-    for (int i = 0; i < n_vehicles; i++)
-    {
-        if (vehicles[i].deliveries_assigned == 0)
-        {
-            fprintf(stdout, "El vehículo %s no realizó entregas.\n\n", vehicles[i].id);
-            continue;
-        }
-        fprintf(stdout, "Vehículo %s: Entregas Asignadas: %d\n", vehicles[i].id, vehicles[i].deliveries_assigned);
-        fprintf(stdout, "Capacidad restante del vehículo %s: Volumen=%.2f, Peso=%.2f\n\n", vehicles[i].id, vehicles[i].capacity_volume, vehicles[i].capacity_weight);
-    }
+    show_vehicles(vehicles, n_vehicles);
 
-    for (int i = 0; i < n_deliveries; i++)
-        if (deliveries[i].vehicle_assigned[0] == '\0')
-            fprintf(stdout, "La entrega %s no fue asignada a ningún vehículo.\n", deliveries[i].id);
+    show_deliveries(deliveries, n_deliveries);
 
     show_metrics(total_distance, liters_used, total_cost, completed_deliveries, total_wait_time / 60, n_deliveries, execution_time);
 

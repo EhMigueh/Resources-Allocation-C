@@ -5,7 +5,7 @@
 #include <float.h>
 #include <time.h>
 
-#define MAX_ID_LENGTH 10
+#define MAX_ID_LENGTH 12
 #define MAX_LINE_LENGTH 256
 #define FLEXIBILITY_MINUTES 60
 #define PRICE_PER_LITER 1350
@@ -99,6 +99,8 @@ float calculate_distance(float, float, float, float);
 int time_to_minutes(const char *);
 float calculate_gasoline_by_type(int);
 void show_metrics(float, float, float, int, float, int, double);
+void show_vehicles(Vehicle *, int);
+void show_deliveries(Delivery *, int);
 
 // Funciones dedicadas a la creación de CSV
 void generate_random_time(char *, int, int);
@@ -106,6 +108,7 @@ float generate_random_float(float, float);
 void generate_random_deliveries_csv();
 void generate_random_vehicles_csv();
 void create_random_databases();
+void export_to_csv(const char *, Delivery *, int);
 
 // Funciones de errores.
 void fatal_error(const char *, const char *, const char *);
@@ -122,9 +125,8 @@ void error_no_arguments(void);
 void error_invalid_option(void);
 void error_invalid_argc(int);
 void error_invalid_numbers(char *, char *, int, int);
-
-// Funcion para exportar csv
-void export_to_csv(const char *, Delivery *, int);
+void error_vehicle_entries(int);
+void error_delivery_entries(int);
 
 // NI IDEA DE DÓNDE SALE ESTO...
 /*

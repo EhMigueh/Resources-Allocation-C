@@ -14,11 +14,7 @@ float generate_random_float(float min, float max)
 
 void generate_random_deliveries_csv(int num_deliveries)
 {
-    if (num_deliveries > MAX_ENTRIES)
-    {
-        fprintf(stderr, RED_COLOR "Error: El numero de entregas no puede exceder %d.\n" RESET_COLOR, MAX_ENTRIES);
-        exit(EXIT_FAILURE);
-    }
+    error_delivery_entries(num_deliveries);
 
     FILE *file = fopen("./input/deliveries.csv", "w");
     error_create_file(file, "./input/deliveries.csv");
@@ -51,11 +47,7 @@ void generate_random_deliveries_csv(int num_deliveries)
 
 void generate_random_vehicles_csv(int num_vehicles)
 {
-    if (num_vehicles > MAX_ENTRIES)
-    {
-        fprintf(stderr, RED_COLOR "Error: El numero de vehiculos no puede exceder %d.\n" RESET_COLOR, MAX_ENTRIES);
-        exit(EXIT_FAILURE);
-    }
+    error_vehicle_entries(num_vehicles);
 
     FILE *file = fopen("./input/vehicles.csv", "w");
     error_create_file(file, "./input/vehicles.csv");

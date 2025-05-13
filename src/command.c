@@ -6,7 +6,7 @@ void show_help()
     fprintf(stdout, CYAN_COLOR "\n--- Ayuda: Opciones de Algoritmos ---\n\n");
     fprintf(stdout, "Uso: ./build/program.out [opciones]\n\n");
     fprintf(stdout, "Opciones disponibles:\n\n");
-    fprintf(stdout, "  --h, --help                          Muestra este menú de ayuda.\n");
+    fprintf(stdout, "  --h, --help                          Muestra este menu de ayuda.\n");
     fprintf(stdout, "  --db, --database <entregas> <autos>   Crea las bases de datos de manera aleatoria.\n");
     fprintf(stdout, "  --edf                                Ejecuta el algoritmo Earliest Deadline First (EDF).\n");
     fprintf(stdout, "  --pb, --priority                     Ejecuta el algoritmo Priority-Based Scheduling.\n");
@@ -44,7 +44,7 @@ void process_command(int argc, char *argv[], Delivery *deliveries, int *n_delive
         *n_deliveries = load_csv_data("./input/deliveries.csv", (void **)&deliveries, DATA_DELIVERY);
         *n_vehicles = load_csv_data("./input/vehicles.csv", (void **)&vehicles, DATA_VEHICLE);
 
-        fprintf(stdout, GREEN_COLOR "\nEntregas (%d) y Vehiculos (%d) generados/cargados con éxito.\n" RESET_COLOR, *n_deliveries, *n_vehicles);
+        fprintf(stdout, GREEN_COLOR "\nEntregas (%d) y Vehiculos (%d) generados/cargados con exito.\n" RESET_COLOR, *n_deliveries, *n_vehicles);
 
         schedule_edf(deliveries, *n_deliveries, vehicles, *n_vehicles);
     }
@@ -54,7 +54,7 @@ void process_command(int argc, char *argv[], Delivery *deliveries, int *n_delive
         *n_deliveries = load_csv_data("./input/deliveries.csv", (void **)&deliveries, DATA_DELIVERY);
         *n_vehicles = load_csv_data("./input/vehicles.csv", (void **)&vehicles, DATA_VEHICLE);
 
-        fprintf(stdout, GREEN_COLOR "\nEntregas (%d) y Vehiculos (%d) generados/cargados con éxito.\n" RESET_COLOR, *n_deliveries, *n_vehicles);
+        fprintf(stdout, GREEN_COLOR "\nEntregas (%d) y Vehiculos (%d) generados/cargados con exito.\n" RESET_COLOR, *n_deliveries, *n_vehicles);
 
         schedule_pb(deliveries, *n_deliveries, vehicles, *n_vehicles);
     }
@@ -64,7 +64,7 @@ void process_command(int argc, char *argv[], Delivery *deliveries, int *n_delive
         *n_deliveries = load_csv_data("./input/deliveries.csv", (void **)&deliveries, DATA_DELIVERY);
         *n_vehicles = load_csv_data("./input/vehicles.csv", (void **)&vehicles, DATA_VEHICLE);
 
-        fprintf(stdout, GREEN_COLOR "\nEntregas (%d) y Vehiculos (%d) generados/cargados con éxito.\n" RESET_COLOR, *n_deliveries, *n_vehicles);
+        fprintf(stdout, GREEN_COLOR "\nEntregas (%d) y Vehiculos (%d) generados/cargados con exito.\n" RESET_COLOR, *n_deliveries, *n_vehicles);
 
         schedule_nn(deliveries, *n_deliveries, vehicles, *n_vehicles);
     }
