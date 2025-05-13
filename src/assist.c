@@ -15,7 +15,7 @@ int time_to_minutes(const char *time_str)
 }
 
 // Funcion para exportar csv
-void export_to_csv(const char *filename, Delivery *deliveries, int n_deliveries, int n_vehicles)
+void export_to_csv(const char *filename, Delivery *deliveries, int n_deliveries)
 {
     FILE *file = fopen(filename, "w");
     error_open_file(file, filename);

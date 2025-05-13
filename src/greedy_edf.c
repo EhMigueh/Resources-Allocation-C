@@ -92,5 +92,5 @@ void schedule_edf(Delivery *deliveries, int n_deliveries, Vehicle *vehicles, int
 
     show_metrics(total_distance, liters_used, total_cost, completed_deliveries, total_wait_time / 60, n_deliveries, execution_time);
 
-    export_to_csv("./output/informe_entregas_edf.csv", deliveries, n_deliveries, n_vehicles);
+    export_to_csv("./output/informe_entregas_edf.csv", deliveries, n_deliveries);
 }

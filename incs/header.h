@@ -71,7 +71,7 @@ typedef enum
 
 // Funciones relacionadas con el manejo de los comandos
 void show_help();
-void process_command(int, char *argv[], Delivery *, int *, Vehicle *, int *);
+void process_command(int, char *[], Delivery *, int *, Vehicle *, int *);
 
 // Funciones de carga de datos.
 int load_csv_data(const char *, void **, DataType);
@@ -87,7 +87,7 @@ void schedule_edf(Delivery *, int, Vehicle *, int);
 void schedule_pb(Delivery *, int, Vehicle *, int);
 
 // Funciones Nearest Neighbor
-void schedule_nn(Delivery *deliveries, int n_deliveries, Vehicle *vehicles, int n_vehicles);
+void schedule_nn(Delivery *, int, Vehicle *, int);
 
 // Funciones de ordenamiento.
 void swap(Delivery *, Delivery *);
@@ -124,7 +124,7 @@ void error_invalid_argc(int);
 void error_invalid_numbers(char *, char *, int, int);
 
 // Funcion para exportar csv
-void export_to_csv(const char *, Delivery *, int, int);
+void export_to_csv(const char *, Delivery *, int);
 
 // NI IDEA DE DÓNDE SALE ESTO...
 /*
