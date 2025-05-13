@@ -66,19 +66,21 @@ void schedule_pb(Delivery *deliveries, int n_deliveries, Vehicle *vehicles, int 
             strcpy(deliveries[i].vehicle_assigned, vehicles[j].id);
 
             int satisfaction = 1;
+            int optimal_wait[] = {20, 30, 40, 50, 60};
+            int max_wait[] = {60, 90, 120, 150, 180};
+            int priority_index = deliveries[i].priority - 1;
+            int wait = (int)wait_time;
 
-            fprintf(stdout, "prioridad = %d - tiempo espera = %.2f\n\n", deliveries[i].priority, wait_time);
-
-            if (deliveries[i].priority == 1 && wait_time <= 60)
-                satisfaction *= 10;
-            if (deliveries[i].priority == 2 && wait_time <= 90)
-                satisfaction++;
-            if (deliveries[i].priority == 3 && wait_time <= 120)
-                satisfaction++;
-            if (deliveries[i].priority == 4 && wait_time <= 150)
-                satisfaction++;
-            if (deliveries[i].priority == 5 && wait_time <= 180)
-                satisfaction++;
+            if (wait <= optimal_wait[priority_index])
+                satisfaction = 5;
+            else if (wait <= optimal_wait[priority_index] + (max_wait[priority_index] - optimal_wait[priority_index]) / 3)
+                satisfaction = 4;
+            else if (wait <= optimal_wait[priority_index] + 2 * (max_wait[priority_index] - optimal_wait[priority_index]) / 3)
+                satisfaction = 3;
+            else if (wait <= max_wait[priority_index])
+                satisfaction = 2;
+            else
+                satisfaction = 1;
 
             deliveries[i].user_satisfaction = satisfaction;
         }
@@ -91,7 +93,7 @@ void schedule_pb(Delivery *deliveries, int n_deliveries, Vehicle *vehicles, int 
 
     int used_vehicles = show_vehicles(vehicles, n_vehicles);
 
-    //    show_deliveries(deliveries, n_deliveries);
+    show_deliveries(deliveries, n_deliveries);
 
     float total_satisfaction = calculate_satisfaction(deliveries, n_deliveries, completed_deliveries);
 

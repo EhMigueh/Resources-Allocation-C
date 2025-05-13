@@ -100,15 +100,14 @@ void show_deliveries(Delivery *deliveries, int n_deliveries)
 
 float calculate_satisfaction(Delivery *delivery, int n_deliveries, int completed_deliveries)
 {
-    float avg_satisfaction = 0.0;
+    if (completed_deliveries == 0)
+        return 0.0;
+
+    float total_satisfaction = 0.0;
 
     for (int i = 0; i < n_deliveries; i++)
-        avg_satisfaction += delivery[i].user_satisfaction;
+        if (delivery[i].user_satisfaction > 0)
+            total_satisfaction += delivery[i].user_satisfaction;
 
-    if (completed_deliveries != 0)
-        avg_satisfaction /= completed_deliveries;
-    else
-        avg_satisfaction = 0.0;
-
-    return avg_satisfaction;
+    return total_satisfaction / completed_deliveries;
 }

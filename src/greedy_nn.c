@@ -75,11 +75,21 @@ void schedule_nn(Delivery *deliveries, int n_deliveries, Vehicle *vehicles, int 
             strcpy(deliveries[i].vehicle_assigned, vehicles[j].id);
 
             int satisfaction = 1;
+            int optimal_wait[] = {20, 30, 40, 50, 60};
+            int max_wait[] = {60, 90, 120, 150, 180};
+            int priority_index = deliveries[i].priority - 1;
+            int wait = (int)wait_time;
 
-            if (wait_time <= 10)
-                satisfaction++;
-            if (deliveries[i].priority <= 2 && wait_time <= 5)
-                satisfaction++;
+            if (wait <= optimal_wait[priority_index])
+                satisfaction = 5;
+            else if (wait <= optimal_wait[priority_index] + (max_wait[priority_index] - optimal_wait[priority_index]) / 3)
+                satisfaction = 4;
+            else if (wait <= optimal_wait[priority_index] + 2 * (max_wait[priority_index] - optimal_wait[priority_index]) / 3)
+                satisfaction = 3;
+            else if (wait <= max_wait[priority_index])
+                satisfaction = 2;
+            else
+                satisfaction = 1;
 
             deliveries[i].user_satisfaction = satisfaction;
         }
@@ -94,7 +104,7 @@ void schedule_nn(Delivery *deliveries, int n_deliveries, Vehicle *vehicles, int 
 
     show_deliveries(deliveries, n_deliveries);
 
-    float total_satisfaction = calculate_satisfaction(deliveries, n_deliveries, n_vehicles);
+    float total_satisfaction = calculate_satisfaction(deliveries, n_deliveries, completed_deliveries);
 
     show_metrics(total_distance, liters_used, total_cost, completed_deliveries, total_wait_time / 60, n_deliveries, execution_time, n_vehicles, used_vehicles, total_satisfaction);
 
