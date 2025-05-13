@@ -87,10 +87,10 @@ int parse_delivery(char *line, Delivery *delivery)
 // Función para parsear los datos de un vehículo
 int parse_vehicle(char *line, Vehicle *vehicle)
 {
-    return sscanf(line, "%[^,],%d,%f,%f,%[^,],%[^,],%f,%f,%d",
+    return sscanf(line, "%[^,],%d,%f,%f,%[^,],%[^,],%f,%f",
                   vehicle->id, &vehicle->type, &vehicle->capacity_volume,
                   &vehicle->capacity_weight, vehicle->start, vehicle->end,
-                  &vehicle->pos_x, &vehicle->pos_y, &vehicle->speciality);
+                  &vehicle->pos_x, &vehicle->pos_y);
 }
 
 // Validar los datos de los vehículos, esto siempre debería estar bien

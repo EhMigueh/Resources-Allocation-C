@@ -52,7 +52,7 @@ void generate_random_vehicles_csv(int num_vehicles)
     FILE *file = fopen("./input/vehicles.csv", "w");
     error_create_file(file, "./input/vehicles.csv");
 
-    fprintf(file, "id,type,capacity_volume,capacity_weight,start,end,pos_x,pos_y,speciality\n");
+    fprintf(file, "id,type,capacity_volume,capacity_weight,start,end,pos_x,pos_y\n");
     for (int i = 0; i < num_vehicles; i++)
     {
         char id[MAX_ID_LENGTH];
@@ -66,11 +66,8 @@ void generate_random_vehicles_csv(int num_vehicles)
         generate_random_time(end, 16, 20);
         float pos_x = generate_random_float(0.0, 10.0);
         float pos_y = generate_random_float(0.0, 10.0);
-        int speciality = rand() % 2;
 
-        fprintf(file, "%s,%d,%.2f,%.2f,%s,%s,%.2f,%.2f,%d\n",
-                id, type, capacity_volume, capacity_weight,
-                start, end, pos_x, pos_y, speciality);
+        fprintf(file, "%s,%d,%.2f,%.2f,%s,%s,%.2f,%.2f\n", id, type, capacity_volume, capacity_weight, start, end, pos_x, pos_y);
     }
     fclose(file);
 }

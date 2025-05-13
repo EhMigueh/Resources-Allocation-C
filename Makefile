@@ -32,6 +32,3 @@ folders:
 
 send:
 	tar czf $(GRUPO)-$(NTAR).tgz --transform 's,^,$(GRUPO)-$(NTAR)/,' Makefile src incs docs
-
-run: all
-	./build/$(EXEC)

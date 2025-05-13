@@ -81,7 +81,7 @@ void error_parse(int parsed, const char *line, DataType type)
 {
     if (type == DATA_DELIVERY && parsed != 12)
         fatal_error("Linea mal parseada", "Revise el archivo deliveries.csv o la funcion parse_delivery", line);
-    else if (type == DATA_VEHICLE && parsed != 9)
+    else if (type == DATA_VEHICLE && parsed != 8)
         fatal_error("Linea mal parseada", "Revise el archivo vehicles.csv o la funcion parse_vehicle", line);
 }
 

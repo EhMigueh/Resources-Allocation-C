@@ -31,7 +31,7 @@ void export_to_csv(const char *filename, Delivery *deliveries, int n_deliveries)
     }
 
     fclose(file);
-    printf("Informe exportado como archivo CSV: %s\n\n", filename);
+    fprintf(stdout, GREEN_COLOR "Informe exportado como archivo CSV: %s\n\n" RESET_COLOR, filename);
 }
 
 float calculate_gasoline_by_type(int type)
@@ -49,20 +49,23 @@ float calculate_gasoline_by_type(int type)
     }
 }
 
-void show_metrics(float total_distance, float liters_used, float total_cost, int completed_deliveries, float total_wait_time, int n_deliveries, double execution_time)
+void show_metrics(float total_distance, float liters_used, float total_cost, int completed_deliveries, float total_wait_time, int n_deliveries, double execution_time, int n_vehicles, int used_vehicles, float total_satisfaction)
 {
-    fprintf(stdout, "\n--- Metricas Totales de la Simulacion ---\n\n");
-    fprintf(stdout, "Numero de entregas completadas: %d/%d\n", completed_deliveries, n_deliveries);
-    fprintf(stdout, "Distancia total recorrida: %.2f km\n", total_distance);
+    fprintf(stdout, YELLOW_COLOR "\n--- Metricas Totales de la Simulacion ---\n\n" RESET_COLOR);
+    fprintf(stdout, "Numero de entregas completadas: %d/%d entregas\n", completed_deliveries, n_deliveries);
     fprintf(stdout, "Tiempo total de espera: %.2f hrs\n", total_wait_time);
+    fprintf(stdout, "Distancia total recorrida: %.2f km\n", total_distance);
+    fprintf(stdout, "Satisfacción del cliente: %.2f/5\n", total_satisfaction);
+    fprintf(stdout, "Utilización de recursos: %d/%d vehiculos\n", used_vehicles, n_vehicles);
     fprintf(stdout, "Tiempo de ejecucion del algoritmo: %.6f seg\n", execution_time);
     fprintf(stdout, "Litros totales de combustible usados: %.2f L\n", liters_used);
     fprintf(stdout, "Costo total del combustible: $%.0f CLP\n\n", total_cost);
 }
 
-void show_vehicles(Vehicle *vehicles, int n_vehicles)
+int show_vehicles(Vehicle *vehicles, int n_vehicles)
 {
-    fprintf(stdout, "--- Vehiculos ---\n\n");
+    fprintf(stdout, YELLOW_COLOR "--- Vehiculos ---\n\n" RESET_COLOR);
+    int count = 0;
 
     for (int i = 0; i < n_vehicles; i++)
     {
@@ -73,21 +76,39 @@ void show_vehicles(Vehicle *vehicles, int n_vehicles)
         }
         fprintf(stdout, "Vehiculo %s: Entregas Asignadas: %d\n", vehicles[i].id, vehicles[i].deliveries_assigned);
         fprintf(stdout, "Capacidad restante del vehiculo %s: Volumen = %.2f m3, Peso = %.2f kg\n\n", vehicles[i].id, vehicles[i].capacity_volume, vehicles[i].capacity_weight);
+        count++;
     }
+
+    return count;
 }
 
 void show_deliveries(Delivery *deliveries, int n_deliveries)
 {
-    fprintf(stdout, "--- Entregas ---\n\n");
+    fprintf(stdout, YELLOW_COLOR "--- Entregas ---\n\n" RESET_COLOR);
 
     for (int i = 0; i < n_deliveries; i++)
     {
         if (deliveries[i].vehicle_assigned[0] == '\0')
         {
-            fprintf(stdout, "La entrega %s no fue asignada a ningun vehiculo.\n", deliveries[i].id);
+            fprintf(stdout, "La entrega %s no fue asignada a ningun vehiculo.\n\n", deliveries[i].id);
             continue;
         }
         fprintf(stdout, "Entrega %s: Vehiculo Agignado: %s\n", deliveries[i].id, deliveries[i].vehicle_assigned);
         fprintf(stdout, "Requisitos de la Entrega %s: Volumen = %.2f m3, Peso = %.2f kg\n\n", deliveries[i].id, deliveries[i].volume, deliveries[i].weight);
     }
+}
+
+float calculate_satisfaction(Delivery *delivery, int n_deliveries, int completed_deliveries)
+{
+    float avg_satisfaction = 0.0;
+
+    for (int i = 0; i < n_deliveries; i++)
+        avg_satisfaction += delivery[i].user_satisfaction;
+
+    if (completed_deliveries != 0)
+        avg_satisfaction /= completed_deliveries;
+    else
+        avg_satisfaction = 0.0;
+
+    return avg_satisfaction;
 }

@@ -4,7 +4,7 @@
 void schedule_pb(Delivery *deliveries, int n_deliveries, Vehicle *vehicles, int n_vehicles)
 {
     custom_qsort(deliveries, 0, n_deliveries - 1, PRIORITY_BASED);
-    fprintf(stdout, "\n--- Estrategia: Priority-Based Scheduling ---\n\n");
+    fprintf(stdout, CYAN_COLOR "\n--- Estrategia: Priority-Based Scheduling ---\n\n" RESET_COLOR);
 
     int completed_deliveries = 0;
     float total_wait_time = 0.0;
@@ -64,6 +64,23 @@ void schedule_pb(Delivery *deliveries, int n_deliveries, Vehicle *vehicles, int 
             deliveries[i].distance = best_real_distance;
             deliveries[i].liters_used = this_delivery_liters;
             strcpy(deliveries[i].vehicle_assigned, vehicles[j].id);
+
+            int satisfaction = 1;
+
+            fprintf(stdout, "prioridad = %d - tiempo espera = %.2f\n\n", deliveries[i].priority, wait_time);
+
+            if (deliveries[i].priority == 1 && wait_time <= 60)
+                satisfaction *= 10;
+            if (deliveries[i].priority == 2 && wait_time <= 90)
+                satisfaction++;
+            if (deliveries[i].priority == 3 && wait_time <= 120)
+                satisfaction++;
+            if (deliveries[i].priority == 4 && wait_time <= 150)
+                satisfaction++;
+            if (deliveries[i].priority == 5 && wait_time <= 180)
+                satisfaction++;
+
+            deliveries[i].user_satisfaction = satisfaction;
         }
         else
             continue;
@@ -72,11 +89,13 @@ void schedule_pb(Delivery *deliveries, int n_deliveries, Vehicle *vehicles, int 
     clock_t end_time = clock();
     double execution_time = (double)(end_time - start_time) / CLOCKS_PER_SEC;
 
-    show_vehicles(vehicles, n_vehicles);
+    int used_vehicles = show_vehicles(vehicles, n_vehicles);
 
-    show_deliveries(deliveries, n_deliveries);
+    //    show_deliveries(deliveries, n_deliveries);
 
-    show_metrics(total_distance, liters_used, total_cost, completed_deliveries, total_wait_time / 60, n_deliveries, execution_time);
+    float total_satisfaction = calculate_satisfaction(deliveries, n_deliveries, completed_deliveries);
+
+    show_metrics(total_distance, liters_used, total_cost, completed_deliveries, total_wait_time / 60, n_deliveries, execution_time, n_vehicles, used_vehicles, total_satisfaction);
 
     export_to_csv("./output/informe_entregas_pb.csv", deliveries, n_deliveries);
 }

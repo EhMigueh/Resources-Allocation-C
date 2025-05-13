@@ -2,7 +2,7 @@
 
 void schedule_nn(Delivery *deliveries, int n_deliveries, Vehicle *vehicles, int n_vehicles)
 {
-    fprintf(stdout, "\n--- Estrategia: Nearest-Neighbor Scheduling ---\n\n");
+    fprintf(stdout, CYAN_COLOR "\n--- Estrategia: Nearest-Neighbor Scheduling ---\n\n" RESET_COLOR);
 
     int completed_deliveries = 0;
     float total_wait_time = 0.0f;
@@ -73,7 +73,15 @@ void schedule_nn(Delivery *deliveries, int n_deliveries, Vehicle *vehicles, int 
             deliveries[i].distance = best_real_distance;
             deliveries[i].liters_used = this_delivery_liters;
             strcpy(deliveries[i].vehicle_assigned, vehicles[j].id);
-            fprintf(stdout, "ID Entrega: %s - ID Vehiculo: %s - Litros usados: %.2f - Distancia recorrida: %.2f\n", deliveries[i].id, vehicles[j].id, this_delivery_liters, best_real_distance); // temporal
+
+            int satisfaction = 1;
+
+            if (wait_time <= 10)
+                satisfaction++;
+            if (deliveries[i].priority <= 2 && wait_time <= 5)
+                satisfaction++;
+
+            deliveries[i].user_satisfaction = satisfaction;
         }
         else
             continue;
@@ -82,11 +90,13 @@ void schedule_nn(Delivery *deliveries, int n_deliveries, Vehicle *vehicles, int 
     clock_t end_time = clock();
     double execution_time = (double)(end_time - start_time) / CLOCKS_PER_SEC;
 
-    show_vehicles(vehicles, n_vehicles);
+    int used_vehicles = show_vehicles(vehicles, n_vehicles);
 
     show_deliveries(deliveries, n_deliveries);
 
-    show_metrics(total_distance, liters_used, total_cost, completed_deliveries, total_wait_time / 60, n_deliveries, execution_time);
+    float total_satisfaction = calculate_satisfaction(deliveries, n_deliveries, n_vehicles);
+
+    show_metrics(total_distance, liters_used, total_cost, completed_deliveries, total_wait_time / 60, n_deliveries, execution_time, n_vehicles, used_vehicles, total_satisfaction);
 
     export_to_csv("./output/informe_entregas_nn.csv", deliveries, n_deliveries);
 }

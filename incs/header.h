@@ -9,7 +9,7 @@
 #define MAX_LINE_LENGTH 256
 #define FLEXIBILITY_MINUTES 60
 #define PRICE_PER_LITER 1350
-#define MAX_ENTRIES 10000
+#define MAX_ENTRIES 999
 
 #define RESET_COLOR "\x1b[0m"
 #define RED_COLOR "\x1b[31m"
@@ -35,6 +35,7 @@ typedef struct
     char vehicle_assigned[5]; // ID del vehículo asignado
     float distance;           // Distancia recorrida
     float liters_used;        // Litros de combustible usados
+    int user_satisfaction;
 } Delivery;
 
 // Estructura que representa un vehículo
@@ -50,7 +51,6 @@ typedef struct
     char end[6];
     float pos_x;
     float pos_y;
-    int speciality;
     int deliveries_assigned; // Este nuevo campo, es para la optimizacion de balanceo de carga
 } Vehicle;
 
@@ -98,9 +98,10 @@ void custom_qsort(Delivery *, int, int, SchedulingMode);
 float calculate_distance(float, float, float, float);
 int time_to_minutes(const char *);
 float calculate_gasoline_by_type(int);
-void show_metrics(float, float, float, int, float, int, double);
-void show_vehicles(Vehicle *, int);
+void show_metrics(float, float, float, int, float, int, double, int, int, float);
+int show_vehicles(Vehicle *, int);
 void show_deliveries(Delivery *, int);
+float calculate_satisfaction(Delivery *, int, int);
 
 // Funciones dedicadas a la creación de CSV
 void generate_random_time(char *, int, int);

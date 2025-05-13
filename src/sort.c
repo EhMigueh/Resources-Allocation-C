@@ -30,7 +30,7 @@ int partition(Delivery *deliveries, int low, int high, SchedulingMode mode)
         }
         else
         {
-            if (deliveries[j].priority >= pivot) // Cambiado a mayor o igual para orden descendente
+            if (deliveries[j].priority <= pivot) // Cambiado a mayor o igual para orden descendente
             {
                 i++;
                 swap(&deliveries[i], &deliveries[j]);
