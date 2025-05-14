@@ -4,6 +4,7 @@
 #include <string.h>
 #include <float.h>
 #include <time.h>
+#include <stdbool.h>
 
 #define MAX_ID_LENGTH 12
 #define MAX_LINE_LENGTH 256
@@ -110,6 +111,7 @@ void generate_random_deliveries_csv();
 void generate_random_vehicles_csv();
 void create_random_databases();
 void export_to_csv(const char *, Delivery *, int);
+bool has_time_conflict(Delivery *, int, Delivery *);
 
 // Funciones de errores
 void fatal_error(const char *, const char *, const char *);

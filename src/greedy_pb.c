@@ -32,12 +32,15 @@ void schedule_pb(Delivery *deliveries, int n_deliveries, Vehicle *vehicles, int 
                 float delivery_distance = calculate_distance(deliveries[i].origin_x, deliveries[i].origin_y, deliveries[i].destination_x, deliveries[i].destination_y);
                 float real_distance = distance_to_origin + delivery_distance;
 
-                if (real_distance < min_distance)
+                // Verificación de conflictos de tiempo
+                strcpy(deliveries[i].vehicle_assigned, vehicles[j].id);
+                if (!has_time_conflict(deliveries, i, &deliveries[i]) && real_distance < min_distance)
                 {
                     min_distance = real_distance;
                     best_vehicle = j;
                     best_real_distance = real_distance;
                 }
+                strcpy(deliveries[i].vehicle_assigned, ""); // Limpiar asignación temporal
             }
         }
 

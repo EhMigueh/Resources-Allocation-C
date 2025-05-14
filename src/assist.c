@@ -112,3 +112,25 @@ float calculate_satisfaction(Delivery *delivery, int n_deliveries, int completed
 
     return total_satisfaction / completed_deliveries;
 }
+
+// Verificación solapamientos de tiempo con entregas previas (Detección de conflictos)
+bool has_time_conflict(Delivery *deliveries, int n_deliveries, Delivery *current)
+{
+    int current_start = time_to_minutes(current->start);
+    int current_end = current_start + current->duration;
+
+    for (int i = 0; i < n_deliveries; i++)
+    {
+        if (strcmp(deliveries[i].vehicle_assigned, "") != 0 &&
+            strcmp(deliveries[i].vehicle_assigned, current->vehicle_assigned) == 0)
+        {
+            int assigned_start = time_to_minutes(deliveries[i].start);
+            int assigned_end = assigned_start + deliveries[i].duration;
+
+            if ((current_start < assigned_end && current_end > assigned_start))
+                return true; // Hay solapamiento
+        }
+    }
+
+    return false;
+}
