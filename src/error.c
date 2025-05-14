@@ -132,3 +132,8 @@ void error_delivery_entries(int num_deliveries)
     if (num_deliveries > MAX_ENTRIES)
         fatal_error("El numero de entregas no puede exceder el maximo de entradas", "Ejemplo: ./build/program.out --db 20 10 o ./build/program.out --database 20 10", "MAX_ENTRIES -> header.h");
 }
+
+void error_exec_python(void)
+{
+    fatal_error("Error al ejecutar el script de Python", "Revise el archivo o la funcion schedule_edf/schedule_pb/schedule_nn", "python/plot_edf.py o python/plot_pb.py o python/plot_nn.py");
+}

@@ -128,6 +128,7 @@ void error_invalid_argc(int);
 void error_invalid_numbers(char *, char *, int, int);
 void error_vehicle_entries(int);
 void error_delivery_entries(int);
+void error_exec_python(void);
 
 // NI IDEA DE DÓNDE SALE ESTO...
 /*

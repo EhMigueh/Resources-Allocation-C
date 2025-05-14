@@ -49,7 +49,8 @@ void process_command(int argc, char *argv[], Delivery *deliveries, int *n_delive
         schedule_edf(deliveries, *n_deliveries, vehicles, *n_vehicles);
 
         // Ejecutar programa en python.
-        system("python3 ./python/plot_edf.py");
+        if (system("python3 ./python/plot_edf.py") == -1)
+            error_exec_python();
     }
     else if (strcmp(argv[1], "--pb") == 0 || strcmp(argv[1], "--priority") == 0)
     {
@@ -62,7 +63,8 @@ void process_command(int argc, char *argv[], Delivery *deliveries, int *n_delive
         schedule_pb(deliveries, *n_deliveries, vehicles, *n_vehicles);
 
         // Ejecutar programa en python.
-        system("python3 ./python/plot_pb.py");
+        if (system("python3 ./python/plot_pb.py") == -1)
+            error_exec_python();
     }
     else if (strcmp(argv[1], "--nn") == 0)
     {
@@ -75,7 +77,8 @@ void process_command(int argc, char *argv[], Delivery *deliveries, int *n_delive
         schedule_nn(deliveries, *n_deliveries, vehicles, *n_vehicles);
 
         // Ejecutar programa en python.
-        system("python3 ./python/plot_nn.py");
+        if (system("python3 ./python/plot_nn.py") == -1)
+            error_exec_python();
     }
     else
         error_invalid_option();
