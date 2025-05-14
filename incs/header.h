@@ -73,7 +73,7 @@ typedef enum
 void show_help();
 void process_command(int, char *[], Delivery *, int *, Vehicle *, int *);
 
-// Funciones de carga de datos.
+// Funciones de carga de datos
 int load_csv_data(const char *, void **, DataType);
 int parse_delivery(char *, Delivery *);
 int parse_vehicle(char *, Vehicle *);
@@ -89,7 +89,7 @@ void schedule_pb(Delivery *, int, Vehicle *, int);
 // Funciones Nearest Neighbor
 void schedule_nn(Delivery *, int, Vehicle *, int);
 
-// Funciones de ordenamiento.
+// Funciones de ordenamiento
 void swap(Delivery *, Delivery *);
 int partition(Delivery *, int, int, SchedulingMode);
 void custom_qsort(Delivery *, int, int, SchedulingMode);
@@ -111,7 +111,7 @@ void generate_random_vehicles_csv();
 void create_random_databases();
 void export_to_csv(const char *, Delivery *, int);
 
-// Funciones de errores.
+// Funciones de errores
 void fatal_error(const char *, const char *, const char *);
 void error_open_file(FILE *, const char *);
 void error_create_file(FILE *, const char *);

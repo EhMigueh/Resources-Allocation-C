@@ -1,9 +1,10 @@
 #include "header.h"
 
+// Genera minutos en múltiplos de 30
 void generate_random_time(char *buffer, int min_hour, int max_hour)
 {
     int hour = min_hour + rand() % (max_hour - min_hour + 1);
-    int minute = (rand() % 4) * 15; // Genera minutos en múltiplos de 15
+    int minute = (rand() % 2) * 30; // 0 o 30
     snprintf(buffer, 7, "%02d:%02d", hour, minute);
 }
 
@@ -38,9 +39,7 @@ void generate_random_deliveries_csv(int num_deliveries)
         float volume = generate_random_float(1.0, 4.0);
         float weight = generate_random_float(5.0, 20.0);
 
-        fprintf(file, "%s,%.2f,%.2f,%.2f,%.2f,%s,%s,%d,%d,%d,%.2f,%.2f\n",
-                id, origin_x, origin_y, destination_x, destination_y,
-                start, end, duration, priority, vehicle_type, volume, weight);
+        fprintf(file, "%s,%.2f,%.2f,%.2f,%.2f,%s,%s,%d,%d,%d,%.2f,%.2f\n", id, origin_x, origin_y, destination_x, destination_y, start, end, duration, priority, vehicle_type, volume, weight);
     }
     fclose(file);
 }

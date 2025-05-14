@@ -14,23 +14,24 @@ int time_to_minutes(const char *time_str)
     return hours * 60 + minutes;
 }
 
-// Funcion para exportar csv
+// Funcion para exportar CSV
 void export_to_csv(const char *filename, Delivery *deliveries, int n_deliveries)
 {
     FILE *file = fopen(filename, "w");
     error_open_file(file, filename);
 
-    fprintf(file, "ID Entrega,ID Vehiculo,Litros de Combustible Usados,Distancia Recorrida (KM)\n");
+    fprintf(file, "ID Entrega,ID Vehiculo,Litros de Combustible Usados,Distancia Recorrida (KM),Inicio del Viaje,Fin del Viaje\n");
 
     for (int i = 0; i < n_deliveries; i++)
     {
         if (deliveries[i].vehicle_assigned[0] != '\0')
-            fprintf(file, "%s,%s,%.2f,%.2f\n", deliveries[i].id, deliveries[i].vehicle_assigned, deliveries[i].liters_used, deliveries[i].distance);
+            fprintf(file, "%s,%s,%.2f,%.2f,%s,%s\n", deliveries[i].id, deliveries[i].vehicle_assigned, deliveries[i].liters_used, deliveries[i].distance, deliveries[i].start, deliveries[i].end);
         else
-            fprintf(file, "%s,N/A,N/A,N/A\n", deliveries[i].id);
+            fprintf(file, "%s,N/A,N/A,N/A,N/A,N/A\n", deliveries[i].id);
     }
 
     fclose(file);
+
     fprintf(stdout, GREEN_COLOR "Informe exportado como archivo CSV: %s\n\n" RESET_COLOR, filename);
 }
 
