@@ -1,6 +1,13 @@
 {
     "files.associations": {
+        "*.embeddedhtml": "html",
         "Makefile": "cpp",
-        "header.h": "c"
+        "header.h": "c",
+        "utils.h": "c",
+        "errors.h": "c",
+        "functions.h": "c",
+        "constants.h": "c",
+        "models.h": "c",
+        "enums.h": "c"
     }
 }

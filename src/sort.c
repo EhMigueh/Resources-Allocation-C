@@ -1,4 +1,6 @@
-#include "header.h"
+#include "../incs/models.h"
+#include "../incs/utils.h"
+#include "../incs/enums.h"
 
 // Función para intercambiar dos entregas
 void swap(Delivery *a, Delivery *b)

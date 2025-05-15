@@ -1,4 +1,8 @@
-#include "header.h"
+#include "../incs/constants.h"
+#include "../incs/models.h"
+#include "../incs/errors.h"
+#include "../incs/utils.h"
+#include "../incs/functions.h"
 
 // Función para mostrar el menú de ayuda
 void show_help()

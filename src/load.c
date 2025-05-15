@@ -1,4 +1,8 @@
-#include "header.h"
+#include "../incs/constants.h"
+#include "../incs/models.h"
+#include "../incs/errors.h"
+#include "../incs/utils.h"
+#include "../incs/functions.h"
 
 // Función para cargar los datos desde el CSV (dependiendo del tipo)
 int load_csv_data(const char *filename, void **data, DataType type)

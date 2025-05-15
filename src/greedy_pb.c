@@ -1,4 +1,7 @@
-#include "header.h"
+#include "../incs/constants.h"
+#include "../incs/models.h"
+#include "../incs/utils.h"
+#include "../incs/functions.h"
 
 // Estrategia: Priority-Based Scheduling
 void schedule_pb(Delivery *deliveries, int n_deliveries, Vehicle *vehicles, int n_vehicles)

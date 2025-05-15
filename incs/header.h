@@ -131,23 +131,3 @@ void error_invalid_numbers(char *, char *, int, int);
 void error_vehicle_entries(int);
 void error_delivery_entries(int);
 void error_exec_python(void);
-
-// NI IDEA DE DÓNDE SALE ESTO...
-/*
-void export_assignments_to_csv(const char *, Delivery *, int, Vehicle *, int);
-void export_metrics_to_csv(const char *, int, int, float, float, double);
-
-void simulate_delays(Delivery *, int, int);
-
-void assign_edf(Delivery *, int, Vehicle *, int);
-
-int compare_by_priority(const void *, const void *);
-
-int compare_deadlines(const void *, const void *);
-
-void assign_nearest_neighbor(Delivery *deliveries, int n_deliveries, Vehicle *vehicles, int n_vehicles);
-
-void calculate_total_distance(Vehicle *, int, Delivery *, int);
-
-void calculate_vehicle_utilization(Vehicle *, int);
-*/

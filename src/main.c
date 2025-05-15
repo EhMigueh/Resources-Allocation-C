@@ -1,4 +1,6 @@
-#include "header.h"
+#include "../incs/models.h"
+#include "../incs/utils.h"
+#include "../incs/functions.h"
 
 int main(int argc, char *argv[])
 {
