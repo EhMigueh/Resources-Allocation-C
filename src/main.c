@@ -1,6 +1,6 @@
-#include "../incs/models.h"
-#include "../incs/utils.h"
-#include "../incs/functions.h"
+#include "models.h"
+#include "utils.h"
+#include "functions.h"
 
 int main(int argc, char *argv[])
 {

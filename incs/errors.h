@@ -1,7 +1,7 @@
 #ifndef ERRORS_H
 #define ERRORS_H
 
-#include "util.h"
+#include "utils.h"
 #include "models.h"
 #include "enums.h"
 

@@ -1,6 +1,6 @@
-#include "../incs/constants.h"
-#include "../incs/errors.h"
-#include "../incs/utils.h"
+#include "constants.h"
+#include "errors.h"
+#include "utils.h"
 
 // Genera minutos en múltiplos de 30
 void generate_random_time(char *buffer, int min_hour, int max_hour)

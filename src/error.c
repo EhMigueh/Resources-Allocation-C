@@ -1,8 +1,8 @@
-#include "../incs/constants.h"
-#include "../incs/models.h"
-#include "../incs/errors.h"
-#include "../incs/utils.h"
-#include "../incs/functions.h"
+#include "constants.h"
+#include "models.h"
+#include "errors.h"
+#include "utils.h"
+#include "functions.h"
 
 // Función de manejo de errores general
 void fatal_error(const char *header, const char *detail, const char *filename)

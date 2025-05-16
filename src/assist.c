@@ -1,7 +1,7 @@
-#include "../incs/constants.h"
-#include "../incs/models.h"
-#include "../incs/errors.h"
-#include "../incs/utils.h"
+#include "constants.h"
+#include "models.h"
+#include "errors.h"
+#include "utils.h"
 
 // Calcular la distancia entre dos puntos (x1, y1) y (x2, y2)
 float calculate_distance(float x1, float y1, float x2, float y2)

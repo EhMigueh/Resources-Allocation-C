@@ -67,7 +67,7 @@ xpos   = [(t - min_inicio).total_seconds() / 60 for t in xticks]
 ax.set_xticks(xpos)
 ax.set_xticklabels([t.strftime("%H:%M") for t in xticks], rotation=45)
 ax.set_xlabel("Hora del Día")
-ax.set_title("Carta Gantt de Entregas por Vehículo")
+ax.set_title("Carta Gantt de Entregas por Vehículo - Estrategia PB")
 plt.grid(axis="x", linestyle="--", alpha=0.5)
 
 # Área en blanco para la tabla
@@ -93,4 +93,4 @@ for i, line in enumerate(tabla):
 
 plt.savefig("./plots/carta_gantt_pb.png", dpi=150, bbox_inches="tight")
 plt.close()
-print("Carta Gantt con tabla lateral compacta guardada en ./plots/carta_gantt_pb.png\n")
+print("Carta Gantt guardada en ./plots/carta_gantt_pb.png\n")
